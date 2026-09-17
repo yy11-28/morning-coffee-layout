@@ -1,0 +1,2159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第六章 布局实战：网页排版与视觉细节</title>
+    <meta
+      name="description"
+      content="第六章 布局实战：网页排版与视觉细节，包含总览、文本流布局、Flex布局、Grid布局及演示内容。"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css?v=20260917-10" />
+  </head>
+  <body class="theme-light">
+    <header id="chapter6" class="chapter-header section reveal">
+      <div class="chapter-header-inner">
+        <div class="chapter-title-group">
+          <span class="chapter-number-tag">第6章</span>
+          <h1>布局实战：网页排版与视觉细节</h1>
+        </div>
+
+        <div class="chapter-mindmap" aria-label="本章内容思维导图">
+          <span class="mindmap-label">本章路径</span>
+          <div class="mindmap-canvas">
+            <button class="mindmap-node mindmap-root active" type="button" data-mindmap-target="chapter6" aria-pressed="true"><span class="mindmap-icon tone-light" aria-hidden="true">◉</span>布局实战</button>
+            <div class="mindmap-branches">
+              <button class="mindmap-node" type="button" data-mindmap-target="overview" aria-pressed="false"><span class="mindmap-icon tone-dark" aria-hidden="true">⌘</span>核心概念</button>
+              <button class="mindmap-node" type="button" data-mindmap-target="textflow" aria-pressed="false"><span class="mindmap-icon tone-mid" aria-hidden="true">◫</span>盒模型</button>
+              <button class="mindmap-node" type="button" data-mindmap-target="flex" aria-pressed="false"><span class="mindmap-icon tone-light" aria-hidden="true">≡</span>文本流</button>
+              <button class="mindmap-node" type="button" data-mindmap-target="grid" aria-pressed="false"><span class="mindmap-icon tone-dark" aria-hidden="true">⊙</span>定位</button>
+              <button class="mindmap-node" type="button" data-mindmap-target="responsive" aria-pressed="false"><span class="mindmap-icon tone-mid" aria-hidden="true">⇄</span>Flex 布局</button>
+              <button class="mindmap-node" type="button" data-mindmap-target="detail" aria-pressed="false"><span class="mindmap-icon tone-light" aria-hidden="true">⊞</span>Grid 与细节</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chapter-below-row">
+        <p class="lead">
+          不只学会 CSS 布局技术，更要掌握文字、图片、图标、按钮、卡片等网页元素的美观排布，让内容既有结构，又兼顾页面的视觉舒适感和交互体验。
+        </p>
+      </div>
+
+      <div class="chapter-feature-row">
+        <div class="chapter-visual-strip" aria-label="网页布局相关图标展示">
+          <div class="visual-pill"><span>▣</span> 网格</div>
+          <div class="visual-pill"><span>◫</span> 版式</div>
+          <div class="visual-pill"><span>◎</span> 对齐</div>
+          <div class="visual-pill"><span>◍</span> 组件</div>
+          <div class="visual-pill"><span>✧</span> 视觉</div>
+        </div>
+        <div class="chapter-aside-panel">
+          <div class="mini-metric">
+            <span class="mini-icon">✦</span>
+            <div>
+              <strong>6</strong>
+              <small>小节</small>
+            </div>
+          </div>
+          <div class="mini-metric">
+            <span class="mini-icon">◇</span>
+            <div>
+              <strong>Flex</strong>
+              <small>+ Grid</small>
+            </div>
+          </div>
+          <div class="chapter-aside-copy">
+            <span>布局思维</span>
+            <p>结构清晰、视觉统一、留白有层次。</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="page-shell">
+      <aside class="sidebar">
+        <div class="brand-block">
+          <span class="brand-mark">UI</span>
+          <div>
+            <p class="eyebrow">第六章</p>
+            <h2>布局实战</h2>
+          </div>
+        </div>
+
+        <nav class="side-nav" aria-label="章节导航">
+          <a href="#chapter6" class="nav-link active">第六章 · 布局实战</a>
+          <a href="#overview" class="nav-link">01 · 布局核心概念</a>
+          <a href="#textflow" class="nav-link">02 · CSS 盒模型</a>
+          <a href="#flex" class="nav-link">03 · 文本流布局</a>
+          <a href="#grid" class="nav-link">04 · Position 定位</a>
+          <a href="#responsive" class="nav-link">05 · Flex 布局</a>
+          <a href="#detail" class="nav-link">06 · Grid 布局</a>
+          <a href="#responsive-layout" class="nav-link">07 · 响应式布局</a>
+          <a href="#visual-detail" class="nav-link">08 · 视觉细节</a>
+          <a href="#practice-flow" class="nav-link">09 · 综合实战案例</a>
+        </nav>
+      </aside>
+
+      <main class="content">
+
+        <section id="overview" class="subsection section reveal">
+          <div class="section-heading">
+            <span>01 · 布局核心概念</span>
+            <h2>页面布局的本质：结构、对齐与留白</h2>
+          </div>
+
+          <div class="tab-group" role="tablist" aria-label="总览内容切换">
+            <button class="tab-btn active" data-target="overview-explain" type="button">📘 讲解</button>
+            <button class="tab-btn" data-target="overview-code" type="button">💻 关键代码</button>
+            <button class="tab-btn" data-target="overview-demo" type="button">🎬 演示 Demo</button>
+            <button class="tab-btn quiz-tab-trigger" data-quiz-target="overview-quiz" type="button">自学自测</button>
+          </div>
+
+          <div class="tab-panel active" data-panel="overview-explain">
+            <div class="info-box">
+              <blockquote>
+                <p><strong>本章项目预告：</strong>本章我们不再零散地学属性，而是从头到尾做一个真实页面——<strong>「晨光咖啡」咖啡店落地页</strong>。它包含顶部导航栏、Hero 横幅（标题+主图+点单按钮）、特色介绍卡片行、产品菜单九宫格、购物车角标、页脚，并且要在手机、平板、电脑上都好看。每一节我们都只完成这个页面的<strong>一个模块</strong>，九节之后拼起来就是一个完整网站。</p>
+              </blockquote>
+
+              <h3>本节自学目标：</h3>
+              <ol>
+                <li>理解布局的本质：结构、空间和层级决定阅读效率</li>
+                <li>掌握页面排版的四大基础原则：结构、对齐、留白、层级</li>
+                <li>看懂「晨光咖啡」整页蓝图，知道每个模块将来用什么布局技术实现</li>
+                <li>建立“先结构后样式、先内容后装饰”的布局思路</li>
+              </ol>
+
+              <h3>正文</h3>
+              <p>假设店长只给了我们一段需求文字：“我要一个咖啡店网页，上面能看到店名和导航，中间有大图吸引顾客，下面展示几款招牌咖啡，顾客能点单，手机也要能看。”布局要做的第一件事，<strong>不是打开编辑器写 CSS，而是把这段话拆成有层级的页面模块</strong>。</p>
+
+              <h4>一、把「晨光咖啡」拆成页面模块（结构优先）</h4>
+              <p>按照信息重要程度，整页从上到下分为 6 个区块：</p>
+              <ol>
+                <li><strong>顶部导航 header</strong>：Logo「晨光咖啡」+ 菜单链接（首页/菜单/门店/关于）+「立即点单」按钮——这是全站入口，最重要。</li>
+                <li><strong>Hero 横幅 section</strong>：一句宣传语 + 一张咖啡大图 + 一个点单按钮，是首屏视觉焦点。</li>
+                <li><strong>特色介绍 section</strong>：3 张卡片（现磨豆源 / 30 分钟送达 / 会员优惠）并排。</li>
+                <li><strong>产品菜单 section</strong>：6~9 款咖啡以规整九宫格展示，每款有图、名称、价格、加购按钮。</li>
+                <li><strong>悬浮元素</strong>：购物车图标上的数量红色角标、右下角「回到顶部」按钮。</li>
+                <li><strong>页脚 footer</strong>：营业时间、地址、联系方式等多列信息。</li>
+              </ol>
+              <p>这一步只写 HTML 语义结构（header / section / footer），<strong>一行 CSS 都不写</strong>。先有内容逻辑，再有视觉表现——这就是结构优先。</p>
+
+              <h4>二、四大排版原则在咖啡店页面里的样子</h4>
+              <ol>
+                <li><strong>结构优先</strong>：视觉顺序与顾客阅读顺序一致——先看到店名，再看卖点，最后看菜单下单。</li>
+                <li><strong>对齐统一</strong>：导航、横幅、卡片、页脚共用同一条左右边界，价格、按钮在卡片内统一对齐。</li>
+                <li><strong>留白控制</strong>：区块之间留白大（分组），卡片内部留白小（成组），页面才有呼吸感。</li>
+                <li><strong>层级表达</strong>：Hero 宣传语最大最深（主标题）、菜单名次之（正文）、价格说明最浅（辅助），层级控制在 3 级内。</li>
+              </ol>
+
+              <h4>三、九节学习路线：同一家店，逐个模块攻克</h4>
+              <ul>
+                <li><strong>第 2 节 盒模型</strong>：搞清点单按钮为什么有大有小、卡片内边距怎么算。</li>
+                <li><strong>第 3 节 文档流</strong>：不写布局 CSS 时，咖啡店各区块默认怎样从上往下堆。</li>
+                <li><strong>第 4 节 定位</strong>：做吸顶导航、购物车角标、回到顶部按钮。</li>
+                <li><strong>第 5 节 Flex（一维）</strong>：做顶部导航栏、3 张特色卡片横排。</li>
+                <li><strong>第 6 节 Grid（二维）</strong>：做产品菜单九宫格、焦点大卡片。</li>
+                <li><strong>第 7 节 响应式</strong>：让同一页在手机变单列、电脑变多列。</li>
+                <li><strong>第 8 节 视觉细节</strong>：统一间距、字体层级、圆角阴影、按钮 hover，让页面有质感。</li>
+                <li><strong>第 9 节 综合实战</strong>：把所有模块拼装成完整的「晨光咖啡」页面。</li>
+              </ul>
+
+              <blockquote>
+                <p><strong>关键认知：</strong>布局不是“把元素摆好”，而是“让信息有顺序、有层级、有呼吸”。后面每学一个技术，都要先问自己：<strong>它解决的是咖啡店页面哪个模块的问题？</strong></p>
+              </blockquote>
+            </div>
+          </div>
+
+          <div class="tab-panel" data-panel="overview-code">
+            <pre><code>/*
+  在开始学习盒模型、Flex 和 Grid 之前，通常先写一段全局重置 CSS，
+  清除浏览器默认样式，并统一使用 box-sizing: border-box，
+  避免默认的 margin、padding、列表样式等干扰布局效果。
+*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: system-ui, sans-serif;
+  color: #333;
+  line-height: 1.6;
+  background: #fff;
+}
+img {
+  max-width: 100%;
+  display: block;
+}</code></pre>
+          </div>
+
+          <div class="tab-panel" data-panel="overview-demo">
+            <div class="demo-shell layout-principles-demo" id="layout-principles-demo">
+              <div class="layout-demo-controls">
+                <label class="switch-row">
+                  <input type="checkbox" data-layout-control="align" />
+                  <span>对齐统一</span>
+                </label>
+                <label class="switch-row">
+                  <input type="checkbox" data-layout-control="structure" />
+                  <span>结构分组</span>
+                </label>
+                <label class="switch-row">
+                  <input type="checkbox" data-layout-control="level" />
+                  <span>层级表达</span>
+                </label>
+                <label class="range-row">
+                  <span>留白控制</span>
+                  <input id="layout-gap-control" type="range" min="8" max="42" value="18" />
+                </label>
+                <button class="layout-demo-action" data-layout-action="grayscale" type="button">灰度测试</button>
+                <button class="layout-demo-action secondary" data-layout-action="reset" type="button">重置</button>
+              </div>
+
+              <div class="layout-demo-article">
+                <div class="layout-demo-header">
+                  <span class="layout-demo-tag">导航</span>
+                  <span class="layout-demo-tag secondary">产品课题</span>
+                </div>
+
+                <div class="layout-demo-body">
+                  <p class="layout-demo-kicker">用户研究</p>
+                  <h4 class="layout-demo-title">为什么页面结构决定内容是否被理解？</h4>
+                  <p class="layout-demo-copy">在信息密量高的页面里，真正影响阅读体验的，不只是内容本身，而是信息该如何被看见、被理解、被记住。</p>
+
+                  <div class="layout-demo-meta">
+                    <span>发布时间：2026-09-15</span>
+                    <span>作者：布局实践</span>
+                  </div>
+
+                  <div class="layout-demo-callout">关键结论：好布局不是把元素塞进页面，而是让信息更容易被识别。</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="self-test-panel hidden" id="overview-quiz">
+            <div class="self-test-header">
+              <h5>自学自测</h5>
+              <p>围绕「晨光咖啡」落地页，检查你对布局本质与四大原则的理解。</p>
+            </div>
+
+            <div class="quiz-item exam-style">
+              <div class="quiz-number">1</div>
+              <div class="quiz-content">
+                <p>简答：「晨光咖啡」落地页从上到下包含哪些核心区块？请至少写出 3 个。</p>
+                <textarea id="ov-q1" rows="3" placeholder="提示：导航、Hero 横幅、特色卡片、产品菜单、页脚……"></textarea>
+              </div>
+            </div>
+
+            <div class="quiz-item exam-style">
+              <div class="quiz-number">2</div>
+              <div class="quiz-content">
+                <p>填空：让用户一眼分清内容主次的是 <input type="text" id="ov-q2a" placeholder="例如：层级" /> 原则；让导航、卡片、页脚共用一条左右边界的是 <input type="text" id="ov-q2b" placeholder="例如：对齐" /> 原则。</p>
+              </div>
+            </div>
+
+            <div class="quiz-item exam-style">
+              <div class="quiz-number">3</div>
+              <div class="quiz-content">
+                <p>判断：做布局的第一步应该先写 CSS 把页面调好看，然后再回头补 HTML 结构。（ ）</p>
+                <div class="choice-list">
+                  <label><input type="radio" name="ov-q3" value="对" /> 对</label>
+                  <label><input type="radio" name="ov-q3" value="错" /> 错</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="quiz-item exam-style">
+              <div class="quiz-number">4</div>
+              <div class="quiz-content">
+                <p>简答：为什么强调「先结构、后视觉」？如果一上来就调色和特效，后期可能遇到什么问题？</p>
+                <textarea id="ov-q4" rows="3" placeholder="提示：结构是骨架；先美化后改结构会返工、难维护"></textarea>
+              </div>
+            </div>
+
+            <div class="quiz-actions">
+              <button class="quiz-submit" type="button">提交</button>
+              <div class="quiz-score" aria-live="polite"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="textflow" class="subsection section reveal">
+          <div class="section-heading">
+            <span>02 · CSS 盒模型</span>
+            <h2>盒模型决定元素的尺寸与间距</h2>
+          </div>
+
+          <div class="tab-group" role="tablist" aria-label="文本流布局切换">
+            <button class="tab-btn active" data-target="textflow-explain" type="button">📘 讲解</button>
+            <button class="tab-btn" data-target="textflow-code" type="button">💻 关键代码</button>
+            <button class="tab-btn" data-target="textflow-demo" type="button">🎬 演示 Demo</button>
+            <button class="tab-btn quiz-tab-trigger" data-quiz-target="box-model-quiz" type="button">自学自测</button>
+          </div>
+
+          <div class="tab-panel active" data-panel="textflow-explain">
+            <div class="info-box">
+              <blockquote>
+                <p><strong>项目进度：</strong>上一节我们把「晨光咖啡」页面拆成了导航、Hero、特色卡片、菜单九宫格等模块。但在排列它们之前，先要搞懂一件事：<strong>页面里每个元素本质上都是一个矩形盒子</strong>。为什么点单按钮里文字不会贴边？为什么卡片之间能留出空隙？答案都在盒模型里。</p>
+              </blockquote>
+
+              <h3>本节自学目标：</h3>
+              <ol>
+                <li>认识 CSS 盒模型 4 个组成区域：content、padding、border、margin</li>
+                <li>结合点单按钮、菜单卡片分清 padding 和 margin 的作用与差异</li>
+                <li>理解 box-sizing 两种模式，掌握盒子宽度计算公式</li>
+                <li>了解 margin 特殊特性：外边距塌陷、负值</li>
+              </ol>
+
+              <h3>正文</h3>
+              <p>打开「晨光咖啡」页面，导航链接、立即点单按钮、每一张咖啡卡片、甚至整张 Hero 横幅——浏览器全部把它们当作<strong>矩形盒子</strong>来摆放。学会计算这些盒子的尺寸和距离，才能精准控制页面。</p>
+
+              <p>一个完整盒子由 4 层构成，从内向外依次是：</p>
+
+              <h4>1. content（内容区）——按钮文字、卡片里的咖啡名</h4>
+              <p>存放真实内容：比如点单按钮上的“立即点单”四个字、菜单卡片里的拿铁图片与价格。默认情况下，width / height 只作用于 content 内容区。</p>
+
+              <h4>2. padding（内边距）——让按钮文字不贴边</h4>
+              <p>内容与边框之间的内部空白。给点单按钮设置 <code>padding: 12px 28px</code>，文字四周就有了呼吸空间，按钮自然变大、更易点击；菜单卡片用 <code>padding: 16px</code> 让图片文字不顶到卡片边缘。padding 属于盒子本身、会占尺寸，<strong>不能为负值</strong>。</p>
+
+              <h4>3. border（边框）——卡片的描边</h4>
+              <p>盒子的边界线，比如菜单卡片 1px 的浅灰描边。边框本身也占尺寸，会影响盒子最终可见宽高。</p>
+
+              <h4>4. margin（外边距）——卡片与卡片之间的距离</h4>
+              <p>当前盒子与<strong>其他盒子</strong>之间的外部距离。导航链接之间、特色卡片之间、区块与区块之间靠 margin（或后面学的 gap）拉开。margin 不属于盒子本体，<strong>支持负值</strong>。注意：上下两个块级元素的垂直 margin 会发生<strong>外边距塌陷</strong>（取最大值而非相加），水平方向不会塌陷。</p>
+
+              <h4>用一个点单按钮算笔账（box-sizing）</h4>
+              <p>假设我们要求点单按钮视觉宽度正好 140px：</p>
+              <ul>
+                <li><strong>content-box</strong>（默认）：<code>width: 100px</code> 只给内容区，再加左右 padding 各 15px、边框 5px，按钮实际宽 = 100 + 30 + 10 = <strong>140px</strong>，要自己做加法。</li>
+                <li><strong>border-box</strong>：直接写 <code>width: 140px; padding: 0 15px; border: 5px</code>，这 140px 已经包含 padding 和 border，<strong>写多少就是多宽</strong>。做整页卡片网格时，border-box 不会让卡片因内边距而撑破行列，项目开发推荐统一使用。</li>
+              </ul>
+
+              <h4>回到咖啡店页面</h4>
+              <p>本节结束，我们的素材库里每个模块都有了正确的“盒子尺寸”：按钮有舒适的 padding、卡片有统一的内边距和描边、模块之间有 margin。下一节将看到：在还不学 Flex/Grid 时，这些盒子<strong>默认会怎样在页面里从上往下流动排布</strong>。</p>
+
+              <blockquote>
+                <p><strong>⚠️ 关键认知：</strong>盒模型决定了“元素从哪里开始，到哪里结束”。布局错位、间距算不对，十有八九是盒模型没算清。</p>
+              </blockquote>
+            </div>
+          </div>
+
+          <div class="tab-panel" data-panel="textflow-code">
+            <pre><code>.card {
+  width: 260px;
+  padding: 20px;
+  border: 4px solid #2563eb;
+  margin: 16px auto;
+  box-sizing: border-box;
+}
+
+/* 盒子总宽度 = width + padding + border */
+/* content-box：width 只算内容区 */
+/* border-box：width 包含内容 + padding + border */
+
+.box {
+  width: 200px;
+  padding: 20px;
+  border: 6px solid #2563eb;
+  box-sizing: border-box;
+}
+
+/* 当 box-sizing: border-box 时，
+   设置的 200px 就是最终视觉宽度 */</code></pre>
+          </div>
+
+          <div class="tab-panel" data-panel="textflow-demo">
+            <div class="demo-shell demo-textflow-show interactive-demo mode-left" data-demo-group="textflow">
+              <div class="demo-controls">
+                <button class="demo-toggle active" data-demo-group="textflow" data-demo-mode="content-box" type="button">content-box</button>
+                <button class="demo-toggle" data-demo-group="textflow" data-demo-mode="border-box" type="button">border-box</button>
+                <button class="demo-toggle" data-demo-group="textflow" data-demo-mode="margin-compare" type="button">margin 对比</button>
+                <button class="beauty-toggle" data-demo-group="textflow" type="button">切换美化</button>
+              </div>
+
+              <div class="textflow-article beautified" data-textflow-article>
+                <h4>CSS 盒模型演示</h4>
+                <div class="textflow-figure box-model-demo">
+                  <div class="box-model-layer margin-zone">
+                    <span>margin</span>
+                    <div class="box-model-layer border-zone">
+                      <span>border</span>
+                      <div class="box-model-layer padding-zone">
+                        <span>padding</span>
+                        <div class="box-model-layer content-zone">
+                          <strong>content</strong>
+                          <small>width: 220px</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <p>
+                  <span class="icon-inline">✓</span>
+                  盒子由 content、padding、border、margin 4 层组成。内容区放真实内容，padding 负责内部留白，margin 控制元素与其他元素的外部距离。
+                </p>
+                <p>
+                  在 content-box 模式下，width 只表示内容区宽度；在 border-box 模式下，width 包含内容区、padding 和 border，计算更直观，项目里更常用。
+                </p>
+              </div>
+
+              <div class="demo-annotation">
+                <h5>布局说明</h5>
+                <p id="textflow-info">当前：content-box<br>✅ 说明：width 只计算内容区；总宽度 = content + padding + border<br>⚠️ 特点：容易让元素看起来比预期更宽，需提前规划盒模型</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="self-test-panel hidden" id="box-model-quiz">
+            <div class="quiz-item exam-style">
+              <div class="quiz-number">1</div>
+              <div class="quiz-content">
+                <p>填空：用来控制盒子<strong>内部</strong>留白的是 <input type="text" id="q1-padding" placeholder="例如：padding" /> ；控制盒子和其他元素之间距离的是 <input type="text" id="q1-margin" placeholder="例如：margin" />。</p>
+              </div>
+            </div>
+
+            <div class="quiz-item exam-style">
+              <div class="quiz-number">2</div>
+              <div class="quiz-content">
+                <p>判断：margin 可以写负数，padding 不能写负数（ ）</p>
+                <div class="choice-list">
+                  <label><input type="radio" name="q2" value="对" /> 对</label>
+                  <label><input type="radio" name="q2" value="错" /> 错</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="quiz-item exam-style">
+              <div class="quiz-number">3</div>
+              <div class="quiz-content">
+                <p>计算：元素设置 <strong>width: 100px; padding: 10px; border: 2px; box-sizing: content-box</strong>，盒子整体宽度是多少？</p>
+                <input type="text" id="q3-answer" placeholder="例如：124px" />
+              </div>
+            </div>
+
+            <div class="quiz-item exam-style">
+              <div class="quiz-number">4</div>
+              <div class="quiz-content">
+                <p>思考：两个块元素，上面盒子 <strong>margin-bottom: 20px</strong>，下面盒子 <strong>margin-top: 30px</strong>，两个盒子之间最终间距是多少？为什么？</p>
+                <textarea id="q4-answer" rows="3" placeholder="请写出最终间距和原因"></textarea>
+              </div>
+            </div>
+
+            <div class="quiz-actions">
+              <button class="quiz-submit" type="button">提交</button>
+              <div class="quiz-score" aria-live="polite"></div>
+            </div>
+
+          </div>
+        </section>
+
+        <section id="flex" class="subsection section reveal">
+          <div class="section-heading">
+            <span>03 · 文本流布局</span>
+            <h2>默认文档流：块级、行内与图文自然分布</h2>
+          </div>
+
+          <div class="tab-group" role="tablist" aria-label="Flex布局切换">
+            <button class="tab-btn active" data-target="flex-explain" type="button">📘 讲解</button>
+            <button class="tab-btn" data-target="flex-code" type="button">💻 关键代码</button>
+            <button class="tab-btn" data-target="flex-demo" type="button">🎬 演示 Demo</button>
+            <button class="tab-btn quiz-tab-trigger" data-quiz-target="textflow-quiz" type="button">自学自测</button>
+          </div>
+
+          <div class="tab-panel active" data-panel="flex-explain">
+            <div class="info-box">
+              <blockquote>
+                <p><strong>项目进度：</strong>我们已经给「晨光咖啡」的按钮、卡片设好了盒模型尺寸。现在把所有模块的 HTML 写好、<strong>先不写任何 Flex/Grid/定位代码</strong>，直接在浏览器打开——会看到什么？导航、横幅、卡片全部老老实实从上往下排成一竖列。这就是浏览器自带的<strong>默认文档流</strong>，也是所有布局的起点。</p>
+              </blockquote>
+
+              <h3>本节自学目标：</h3>
+              <ol>
+                <li>理解什么是浏览器默认文档流，能预测咖啡店页面“裸奔”时的样子</li>
+                <li>区分块级元素、行内元素的布局行为</li>
+                <li>掌握文本流下图文混排的特点与坑点（图片底缝、浮动）</li>
+                <li>知道文档流能做什么、不能做什么，为第 4、5 节的定位和 Flex 埋下需求</li>
+              </ol>
+
+              <h3>正文</h3>
+              <p>文档流是浏览器<strong>默认的元素排列规则</strong>：元素按 HTML 书写顺序，从上到下、从左到右依次排布。把咖啡店页面裸跑一遍，你会发现：header 独占最上面一整条，Hero 横幅在它下面再占一整条，特色卡片、菜单区、页脚依次垂直堆叠——但导航里的 4 个链接却在同一行横着排。为什么？因为元素分两类。</p>
+
+              <h4>一、块级元素：独占一行的“整行区块”</h4>
+              <p>代表标签：<code>div</code>、<code>p</code>、<code>h1</code>~<code>h6</code>、<code>ul</code>、<code>ol</code>，以及我们用的 <code>header</code>、<code>section</code>、<code>footer</code>。</p>
+              <ul>
+                <li><strong>独占新一行</strong>，宽度默认撑满父容器——所以每个大区块上下堆叠、自动占满页面宽度；</li>
+                <li>可以正常设置 <code>width</code>、<code>height</code>、<code>padding</code>、<code>margin</code>；</li>
+                <li>咖啡店页面的 6 大区块都是块级，天然完成了“上下分区”。</li>
+              </ul>
+
+              <h4>二、行内元素：挤在一行的“文字部件”</h4>
+              <p>代表标签：<code>span</code>、<code>a</code>、<code>strong</code>、<code>em</code>。</p>
+              <ul>
+                <li><strong>不独占一行</strong>，沿文字基线横向排列——所以导航的 4 个 <code>&lt;a&gt;</code> 链接天然横排；</li>
+                <li>上下 margin、width、height 默认<strong>不生效</strong>，只能调水平间距；</li>
+                <li>所以光靠默认流，导航链接能横排，但<strong>无法让 Logo 在左、链接居中、点单按钮在右</strong>——这正是第 5 节 Flex 要解决的。</li>
+              </ul>
+
+              <blockquote>
+                <p><strong>💡 自学提示：</strong>行内与块级可以用 <code>display</code> 互相转换，比如给链接 <code>display: inline-block</code> 就能给它设上下 padding，做出可点击的大按钮。</p>
+              </blockquote>
+
+              <h4>三、图文混排：菜单卡片里的图片底缝</h4>
+              <p><code>&lt;img&gt;</code> 是特殊的<strong>行内块元素</strong>，默认按文本基线对齐，直接放进卡片底部会出现一条几像素的小缝隙——这是新手做菜单卡片最常见的坑，给图片设 <code>display: block</code> 即可消除。若要“文字环绕图片”，老办法是 <code>float</code> 浮动，但浮动会造成父元素高度塌陷，现代开发中横向排列一律交给后面的 Flex/Grid。</p>
+
+              <h4>四、文档流的能力边界（引出后续章节）</h4>
+              <p>默认流能让页面“从上到下有顺序”，但对咖啡店页面来说它做不到：</p>
+              <ol>
+                <li>让导航栏滚走后仍<strong>吸在顶部</strong>、购物车角标压在图标右上角——需要第 4 节<strong>定位</strong>；</li>
+                <li>让 3 张特色卡片<strong>横向并排、等高均分</strong>——需要第 5 节 <strong>Flex</strong>；</li>
+                <li>让 9 款咖啡排成<strong>规整九宫格、焦点款跨两列</strong>——需要第 6 节 <strong>Grid</strong>。</li>
+              </ol>
+
+              <blockquote>
+                <p><strong>⚠️ 关键认知：</strong>真实页面是组合拳——<strong>大区块靠文档流上下堆叠，区块内部的横向/网格排列再交给 Flex、Grid</strong>。先认清默认行为，才知道什么时候需要打破它。</p>
+              </blockquote>
+            </div>
+          </div>
+
+          <div class="tab-panel" data-panel="flex-code">
+            <pre><code>&lt;div class="flex-container"&gt;
+  &lt;div class="card"&gt;
+    &lt;div class="card-icon"&gt;🏠&lt;/div&gt;
+    &lt;p&gt;首页&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class="card"&gt;
+    &lt;div class="card-icon"&gt;📋&lt;/div&gt;
+    &lt;p&gt;列表&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class="card"&gt;
+    &lt;div class="card-icon"&gt;⚙️&lt;/div&gt;
+    &lt;p&gt;设置&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+.flex-container {
+  display: flex; /* 容器开启弹性布局 */
+  justify-content: space-around; /* 主轴横向均匀分布 */
+  align-items: center; /* 侧轴垂直居中 */
+  flex-wrap: wrap; /* 容器过窄时自动换行 */
+  gap: 20px; /* 统一设置元素间距，减少手写 margin 混乱 */
+  padding: 24px;
+  background: #f8f9fa;
+  border-radius: 12px;
+}
+.card {
+  width: 140px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.card-icon { font-size: 28px; margin-bottom: 12px; }</code></pre>
+          </div>
+
+          <div class="tab-panel" data-panel="flex-demo">
+            <div class="demo-shell textflow-demo-shell">
+              <div class="demo-guide-callout">
+                <strong>【文本流交互实验】</strong>
+                浏览器不添加 Flex/Grid 时，元素默认按照文本流从上到下排列。切换元素类型，拖动宽高和 margin 滑块，实时观察排版变化，理解块级/行内元素的差异，以及图文混排的基线、浮动效果。
+              </div>
+
+              <div class="textflow-demo-controls">
+                <label class="textflow-control-field">
+                  <span>元素类型</span>
+                  <select id="textflow-type-select">
+                    <option value="block">块级元素 div</option>
+                    <option value="inline">行内元素 span</option>
+                    <option value="inline-block">行内块 img</option>
+                  </select>
+                </label>
+
+                <label class="textflow-range-field">
+                  <span>宽度</span>
+                  <input id="textflow-width-range" type="range" min="0" max="200" step="4" value="80" />
+                  <strong id="textflow-width-value">80px</strong>
+                </label>
+
+                <label class="textflow-range-field">
+                  <span>高度</span>
+                  <input id="textflow-height-range" type="range" min="0" max="100" step="4" value="48" />
+                  <strong id="textflow-height-value">48px</strong>
+                </label>
+
+                <label class="textflow-range-field">
+                  <span>上下 margin</span>
+                  <input id="textflow-margin-range" type="range" min="0" max="40" step="2" value="8" />
+                  <strong id="textflow-margin-value">8px</strong>
+                </label>
+
+                <label class="textflow-check-field">
+                  <input id="textflow-float-toggle" type="checkbox" />
+                  <span>开启 float 浮动</span>
+                </label>
+
+                <button id="textflow-reset-btn" type="button">重置</button>
+              </div>
+
+              <div class="textflow-preview-grid">
+                <div class="textflow-panel">
+                  <div class="textflow-panel-title">当前实验元素</div>
+                  <div class="textflow-demo-scene" id="textflow-demo-scene">
+                    <div class="textflow-demo-element block-demo" id="textflow-demo-element" aria-live="polite">
+                      <span class="box-model-layer margin-layer"></span>
+                      <span class="box-model-layer padding-layer"></span>
+                      <span class="box-model-layer content-layer"><span class="demo-box-text">div块级元素</span></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="textflow-panel reference-panel">
+                  <div class="textflow-panel-title">参考基准</div>
+                  <div class="textflow-reference-scene">
+                    <p>参考文字：文本流是浏览器默认排版规则，元素会按阅读顺序自然排列。</p>
+                    <p>没有额外布局属性时，浏览器会沿着正常文档流逐个放置元素，段落、图片和文字会在同一阅读层级中共同流动。</p>
+                  </div>
+                </div>
+
+                <div class="textflow-panel observation-panel">
+                  <div class="textflow-panel-title">现象说明</div>
+                  <ul class="observation-summary">
+                    <li><span>元素类型</span><strong id="obs-type">div</strong></li>
+                    <li><span>是否独占一行</span><strong id="obs-block">是</strong></li>
+                    <li><span>宽高是否生效</span><strong id="obs-size">是</strong></li>
+                    <li><span>上下 margin 是否生效</span><strong id="obs-margin">是</strong></li>
+                    <li><span>浮动/基线问题</span><strong id="obs-float">无</strong></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="textflow-tip" id="textflow-tip">
+                提示：当前是 div 元素，在默认文本流下的行为：独占一行，宽高和上下 margin 都能生效。
+              </div>
+
+              <div class="demo-activity-guide">
+                <h5>实验指南</h5>
+                <ol class="experiment-checklist">
+                  <li><label><input type="checkbox" /> 拖动宽度滑块，观察元素是否独占一行</label></li>
+                  <li><label><input type="checkbox" /> 拖动高度滑块，观察盒子高度是否变化</label></li>
+                  <li><label><input type="checkbox" /> 拖动上下 margin，观察段落间距是否变化</label></li>
+                  <li><label><input type="checkbox" /> 切换 span，观察宽高和上下 margin 是否无效</label></li>
+                  <li><label><input type="checkbox" /> 切换 img，观察底部是否存在基线缝隙</label></li>
+                  <li><label><input type="checkbox" /> 开启 float，观察文字环绕和父容器高度塌陷</label></li>
+                </ol>
+              </div>
+
+              <div class="conclusion-box">
+                <p>我的结论：</p>
+                <textarea placeholder="块级元素、行内元素、行内块元素有什么不同？"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="self-test-panel hidden" id="textflow-quiz">
+            <div class="self-test-header">
+              <h5>自学自测</h5>
+              <p>根据你刚才的观察，判断默认文本流中块级元素、行内元素和行内块元素的区别。</p>
+            </div>
+
+            <div class="quiz-item exam-style">
+              <div class="quiz-number">1</div>
+              <div class="quiz-content">
+                <p>选择：在默认文档流中，<strong>div</strong> 默认属于哪种元素？</p>
+                <div class="choice-list">
+                  <label><input type="radio" name="tf-q1" value="块级元素" /> 块级元素</label>
+                  <label><input type="radio" name="tf-q1" value="行内元素" /> 行内元素</label>
+                  <label><input type="radio" name="tf-q1" value="行内块元素" /> 行内块元素</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="quiz-item exam-style">
+              <div class="quiz-number">2</div>
+              <div class="quiz-content">
+                <p>判断：<strong>span</strong> 设置 width、height 以及上下 margin 后，通常仍然会按文字流正常排列，且宽高和上下间距表现得很弱或无效。（ ）</p>
+                <div class="choice-list">
+                  <label><input type="radio" name="tf-q2" value="对" /> 对</label>
+                  <label><input type="radio" name="tf-q2" value="错" /> 错</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="quiz-item exam-style">
+              <div class="quiz-number">3</div>
+              <div class="quiz-content">
+                <p>填空：<strong>img</strong> 默认更接近 <input type="text" id="tf-q3" placeholder="例如：行内块元素" />，它会和文字基线对齐，所以常常出现底部缝隙。</p>
+              </div>
+            </div>
+
+            <div class="quiz-item exam-style">
+              <div class="quiz-number">4</div>
+              <div class="quiz-content">
+                <p>简答：当元素开启 <strong>float: left</strong> 后，为什么文字会绕着它排布，并且父容器可能出现高度塌陷？</p>
+                <textarea id="tf-q4" rows="3" placeholder="请写出你的判断和原因"></textarea>
+              </div>
+            </div>
+
+            <div class="quiz-actions">
+              <button class="quiz-submit" type="button">提交</button>
+              <div class="quiz-score" aria-live="polite"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="grid" class="subsection section reveal">
+          <div class="section-heading">
+            <span>04 · Position 定位</span>
+            <h2>定位与层叠：控制元素的相对位置与视觉层次</h2>
+          </div>
+
+          <div class="tab-group" role="tablist" aria-label="Grid布局切换">
+            <button class="tab-btn active" data-target="grid-explain" type="button">📘 讲解</button>
+            <button class="tab-btn" data-target="grid-code" type="button">💻 关键代码</button>
+            <button class="tab-btn" data-target="grid-demo" type="button">🎬 演示 Demo</button>
+            <button class="tab-btn quiz-tab-trigger" data-quiz-target="position-quiz" type="button">自学自测</button>
+          </div>
+
+          <div class="tab-panel active" data-panel="grid-explain">
+            <div class="info-box">
+              <blockquote>
+                <p><strong>项目进度：</strong>上一节我们看到，咖啡店页面在默认文档流下只能老老实实地从上往下堆。但有三个需求默认流做不到：① 顾客往下翻菜单时，<strong>顶部导航要一直吸在屏幕顶端</strong>；② 购物车图标右上角要压一个<strong>红色数量角标</strong>；③ 右下角要放一个<strong>始终悬浮的「回到顶部」</strong>按钮。这三个需求，都要用 <strong>position 定位</strong>来实现。</p>
+              </blockquote>
+
+              <h3 class="info-section-title">本节学习目标</h3>
+              <ol>
+                <li>理解定位的核心作用：<strong>脱离文档流、重构元素位置、控制视觉层级</strong></li>
+                <li>结合吸顶导航、购物车角标、回到顶部，掌握各定位模式的参照物与场景</li>
+                <li>弄懂 relative、absolute、fixed 的核心区别与高频误区</li>
+                <li>掌握 z-index 生效条件与层叠优先级规则</li>
+              </ol>
+
+              <h3 class="info-body-title">正文</h3>
+              <p>默认文档流里元素互相占位、互不重叠。而 <strong>position 定位</strong>是 CSS 用来<strong>打破文档流</strong>的能力：让元素脱离常规排版、自由摆放，并建立视觉层级。学定位始终看三件事：<strong>参照物是谁</strong>、<strong>是否脱离文档流（还占不占位）</strong>、<strong>能不能用 z-index</strong>。</p>
+
+              <h4>1. static 默认定位（咖啡店所有区块的初始状态）</h4>
+              <p>所有元素默认 static：遵循正常文档流，不能用 top/left，z-index 无效。导航、横幅、卡片在没加定位前都是这个状态，不用手动写。</p>
+
+              <h4>2. relative 相对定位（给购物车图标“定位锚点”）</h4>
+              <p><strong>参照物是元素自身原位置</strong>，<strong>不脱离文档流</strong>（原来的位置保留）。它在咖啡店里最重要的用途不是挪元素，而是：给购物车按钮加 <code>position: relative</code>，让里面的红色角标以它为基准定位。这就是经典的<strong>「父 relative + 子 absolute」</strong>组合里父级的角色。</p>
+              <blockquote>
+                <p><strong>自学重点误区：</strong>relative 不是用来做大布局移动的，<strong>主要作用是留占位 + 充当定位父级</strong>。</p>
+              </blockquote>
+
+              <h4>3. absolute 绝对定位（购物车红色角标）</h4>
+              <p><strong>参照物：最近一个非 static 的祖先</strong>；<strong>完全脱离文档流</strong>，不占位、漂浮在普通内容之上。给角标写 <code>position: absolute; top: -8px; right: -8px</code>，它就精准贴在购物车图标的右上角；因为父级按钮已经是 relative，角标不会跑偏到整个页面。若所有祖先都是 static，它才会改为相对浏览器视口定位。</p>
+              <blockquote>
+                <p><strong>核心概念：定位包含块</strong>——absolute 能否定位准确，完全取决于有没有一个 relative/fixed 的父级。Hero 横幅上“今日特惠”标签压在图片一角，用的也是同一套写法。</p>
+              </blockquote>
+
+              <h4>4. fixed 固定定位（吸顶导航 + 回到顶部）</h4>
+              <p><strong>参照物是浏览器视口</strong>，完全脱离文档流，页面滚动时<strong>永远固定在屏幕上不动</strong>。给顶部导航 <code>position: fixed; top: 0; left: 0; right: 0</code>，顾客浏览长菜单时导航始终可用；右下角「回到顶部」设 <code>right: 24px; bottom: 24px</code> 同样用 fixed。注意：fixed 元素脱流后不再占位置，要给下方内容补 padding-top，否则开头内容会被导航盖住。</p>
+
+              <h4>5. z-index：控制谁压在谁上面</h4>
+              <p>元素重叠时用 z-index 控制上下顺序，<strong>前提是元素必须先设置非 static 定位</strong>。值越大越靠前。咖啡店页面通常这样分层：导航/回到顶部 z-index 最高（如 100），角标、标签压在各自父级之上，普通内容保持默认。切忌一上来就写 9999——层级是相对各自层叠上下文比较的，乱写会导致弹窗被遮挡等疑难问题。</p>
+
+              <h4>✅ 四种定位在咖啡店页面里的分工（自学必背）</h4>
+              <ol>
+                <li><strong>static</strong>：正常流、无偏移（所有普通区块）</li>
+                <li><strong>relative</strong>：相对自己、留占位、做角标的定位父级</li>
+                <li><strong>absolute</strong>：相对定位父级、漂浮叠加（购物车角标、横幅标签）</li>
+                <li><strong>fixed</strong>：相对屏幕、固定不动（吸顶导航、回到顶部）</li>
+              </ol>
+
+              <blockquote>
+                <p><strong>📌 关键认知：</strong>普通流负责“排版”，定位负责“叠加”。定位只解决少数悬浮/覆盖元素，<strong>绝不能拿它来排整个页面</strong>——咖啡店的主体排布，接下来交给第 5 节的 Flex。</p>
+              </blockquote>
+            </div>
+          </div>
+
+          <div class="tab-panel" data-panel="grid-code">
+            <pre><code>&lt;div class="grid-wrap"&gt;
+  &lt;div class="grid-item big"&gt;
+    &lt;h3&gt;核心模块&lt;/h3&gt;
+    &lt;p&gt;突出展示内容&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class="grid-item"&gt;&lt;span&gt;✨&lt;/span&gt;&lt;p&gt;功能1&lt;/p&gt;&lt;/div&gt;
+  &lt;div class="grid-item"&gt;&lt;span&gt;🔥&lt;/span&gt;&lt;p&gt;功能2&lt;/p&gt;&lt;/div&gt;
+  &lt;div class="grid-item"&gt;&lt;span&gt;💎&lt;/span&gt;&lt;p&gt;功能3&lt;/p&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+.grid-wrap {
+  display: grid; /* 让容器变成二维布局 */
+  grid-template-columns: repeat(4, 1fr); /* 4 列等分布局 */
+  gap: 16px; /* 统一网格间距 */
+  padding: 24px;
+  background: #f5f7fa;
+  border-radius: 12px;
+}
+.big { /* 大模块跨两列两行，形成视觉重点 */
+  grid-column: 1 / 3;
+  grid-row: 1 / 3;
+  padding: 24px;
+}
+.grid-item {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  padding: 16px;
+}</code></pre>
+          </div>
+
+          <div class="tab-panel" data-panel="grid-demo">
+            <div class="demo-shell interactive-demo mode-cols4" data-demo-group="grid" data-demo-kind="grid">
+              <div class="demo-controls">
+                <div class="control-field">
+                  <label for="grid-columns">列数</label>
+                  <select id="grid-columns">
+                    <option value="4">4 列</option>
+                    <option value="2">2 列</option>
+                    <option value="1">1 列</option>
+                  </select>
+                </div>
+                <div class="control-field range-field">
+                  <label for="grid-gap">gap 间距</label>
+                  <div class="range-wrap">
+                    <input id="grid-gap" type="range" min="8" max="28" step="2" value="12" />
+                    <span id="grid-gap-value">12px</span>
+                  </div>
+                </div>
+                <label class="switch-field">
+                  <input id="grid-feature-toggle" type="checkbox" checked />
+                  <span>突出主模块</span>
+                </label>
+                <button class="demo-toggle active" data-demo-group="grid" data-demo-mode="cols4" type="button">4 列</button>
+                <button class="demo-toggle" data-demo-group="grid" data-demo-mode="cols2" type="button">2 列</button>
+                <button class="demo-toggle" data-demo-group="grid" data-demo-mode="cols1" type="button">1 列</button>
+                <button class="beauty-toggle" data-demo-group="grid" type="button">切换美化</button>
+              </div>
+              <div class="demo-code-runner">
+                <label>示例代码</label>
+                <textarea class="demo-code-input" data-demo-group="grid" rows="6">&lt;div class="grid-demo"&gt;
+  &lt;div class="grid-item feature"&gt;特色功能&lt;/div&gt;
+  &lt;div class="grid-item"&gt;核心能力&lt;/div&gt;
+  &lt;div class="grid-item"&gt;图片展示&lt;/div&gt;
+  &lt;div class="grid-item"&gt;数据说明&lt;/div&gt;
+&lt;/div&gt;</textarea>
+                <button class="run-demo-code" data-demo-group="grid" type="button">运行</button>
+              </div>
+              <div class="demo-surface demo-grid-show grid-demo-surface" data-demo-group="grid">
+                <div class="grid-item feature">特色功能</div>
+                <div class="grid-item">核心能力</div>
+                <div class="grid-item">图片展示</div>
+                <div class="grid-item">数据说明</div>
+              </div>
+              <div class="demo-status">
+                <h5>布局说明</h5>
+                <p id="grid-info">当前：4列网格（适合复杂模块内容）<br>✅优点：二维布局能力强，适合首页和产品矩阵<br>⚠️缺点：模块跨度过大时，页面会显得重，需控制视觉重点</p>
+                <code id="grid-css-output" style="display:block; margin-top:10px; font-size:0.8rem; white-space:pre-wrap;">grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px;</code>
+              </div>
+            </div>
+
+            <div class="demo-shell position-demo-shell" data-demo-group="position" data-demo-kind="position">
+              <div class="demo-controls position-demo-controls">
+                <div class="control-field">
+                  <label for="position-mode">定位模式</label>
+                  <select id="position-mode">
+                    <option value="static">static</option>
+                    <option value="relative">relative</option>
+                    <option value="absolute">absolute</option>
+                    <option value="fixed">fixed</option>
+                  </select>
+                </div>
+                <div class="control-field range-field">
+                  <label for="position-top">top</label>
+                  <div class="range-wrap">
+                    <input id="position-top" type="range" min="0" max="120" value="26" />
+                    <span id="position-top-value">26px</span>
+                  </div>
+                </div>
+                <div class="control-field range-field">
+                  <label for="position-left">left</label>
+                  <div class="range-wrap">
+                    <input id="position-left" type="range" min="0" max="180" value="38" />
+                    <span id="position-left-value">38px</span>
+                  </div>
+                </div>
+                <div class="control-field range-field">
+                  <label for="position-z">z-index</label>
+                  <div class="range-wrap">
+                    <input id="position-z" type="range" min="0" max="10" step="1" value="3" />
+                    <span id="position-z-value">3</span>
+                  </div>
+                </div>
+                <label class="switch-field">
+                  <input id="position-parent-toggle" type="checkbox" checked />
+                  <span>父级开启 relative</span>
+                </label>
+              </div>
+
+              <div class="position-demo-stage">
+                <div id="position-demo-parent" class="position-demo-parent is-relative">
+                  <div class="position-demo-base">普通流区</div>
+                  <div class="position-demo-cover">覆盖层</div>
+                  <div id="position-demo-box" class="position-demo-box mode-absolute">定位元素</div>
+                </div>
+              </div>
+
+              <div class="demo-status">
+                <h5>观察要点</h5>
+                <p id="position-demo-tip">absolute 会相对最近一个非 static 的祖先定位；父级为 relative 时，元素会在父框内漂浮，层级由 z-index 控制。</p>
+                <code id="position-demo-css-output" style="display:block; margin-top:10px; font-size:0.8rem; white-space:pre-wrap;">position: absolute; left: 38px; top: 26px; z-index: 3; parent { position: relative; }</code>
+              </div>
+            </div>
+          </div>
+
+          <div class="self-test-panel hidden" id="position-quiz">
+            <div class="self-test-header">
+              <h5>自学自测</h5>
+              <p>根据本节定位知识，判断 relative、absolute、fixed 和 z-index 的关键差异。</p>
+            </div>
+
+            <div class="quiz-item exam-style">
+              <div class="quiz-number">1</div>
+              <div class="quiz-content">
+                <p>选择：<strong>relative</strong> 的核心特点是什么？</p>
+                <div class="choice-list">
+                  <label><input type="radio" name="pos-q1" value="相对自身位置做偏移但保留占位" /> 相对自身位置做偏移但保留占位</label>
+                  <label><input type="radio" name="pos-q1" value="完全脱离文档流并固定在视口" /> 完全脱离文档流并固定在视口</label>
+                  <label><input type="radio" name="pos-q1" value="相对最近非static祖先定位" /> 相对最近非static祖先定位</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="quiz-item exam-style">
+              <div class="quiz-number">2</div>
+              <div class="quiz-content">
+                <p>判断：<strong>absolute</strong> 通常会相对最近一个非 static 的祖先元素定位，并且会脱离正常文档流。（ ）</p>
+                <div class="choice-list">
+                  <label><input type="radio" name="pos-q2" value="对" /> 对</label>
+                  <label><input type="radio" name="pos-q2" value="错" /> 错</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="quiz-item exam-style">
+              <div class="quiz-number">3</div>
+              <div class="quiz-content">
+                <p>填空：<strong>fixed</strong> 的参照物是 <input type="text" id="pos-q3" placeholder="例如：浏览器视口" />，所以页面滚动时元素仍会保持固定。</p>
+              </div>
+            </div>
+
+            <div class="quiz-item exam-style">
+              <div class="quiz-number">4</div>
+              <div class="quiz-content">
+                <p>简答：为什么说 <strong>z-index</strong> 只有在元素设置了 position（非 static）时才生效？并说明它的层级规则。</p>
+                <textarea id="pos-q4" rows="3" placeholder="请写出你的理解与层级规则"></textarea>
+              </div>
+            </div>
+
+            <div class="quiz-actions">
+              <button class="quiz-submit" type="button">提交</button>
+              <div class="quiz-score" aria-live="polite"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="responsive" class="subsection section reveal">
+          <div class="section-heading">
+            <span>05 · Flex 布局</span>
+            <h2>一维布局：让组件、按钮和导航按比例分布</h2>
+          </div>
+
+          <div class="tab-group" role="tablist" aria-label="Flex布局切换">
+            <button class="tab-btn active" data-target="responsive-explain" type="button">📘 讲解</button>
+            <button class="tab-btn" data-target="responsive-code" type="button">💻 关键代码</button>
+            <button class="tab-btn" data-target="responsive-demo" type="button">🎬 演示 Demo</button>
+            <button class="tab-btn quiz-tab-trigger" data-quiz-target="flex-quiz" type="button">自学自测</button>
+          </div>
+
+          <div class="tab-panel active" data-panel="responsive-explain">
+            <div class="info-box">
+              <blockquote>
+                <p><strong>项目进度：</strong>定位解决了吸顶导航和购物车角标，但咖啡店导航栏内部还是“挤成一堆”：我们想要 <strong>Logo 在最左、菜单链接居中、立即点单按钮在最右</strong>，下方的 3 张特色卡片也要<strong>横向并排、等高、间距均匀</strong>。这些“同一行/同一列上的一维排布”，正是 <strong>Flex 布局</strong>最擅长的事。</p>
+              </blockquote>
+
+              <h3>本节自学目标：</h3>
+              <ol>
+                <li>理解 Flex 布局的核心本质：<strong>解决一维自适应排列问题</strong></li>
+                <li>掌握主轴、侧轴的动态对应关系，读懂 Flex 所有对齐规则</li>
+                <li>结合导航栏、特色卡片行熟练掌握主轴对齐、侧轴对齐、自动换行、间距控制</li>
+                <li>区分 Flex 与文档流、定位、Grid 的适用差异</li>
+                <li>规避 Flex 常见挤压、不换行、对不齐的坑点</li>
+              </ol>
+
+              <h3>正文</h3>
+
+              <h4>一、Flex 核心本质：一条线上的智能排布</h4>
+              <p>Flex 让一组子元素在<strong>横向或纵向单一方向</strong>上自动排列、对齐、均分、换行。给导航容器加 <code>display: flex</code>，Logo、链接、按钮立刻变成一行；给特色卡片区加 Flex，3 张卡片自动横排并均分宽度，无需浮动、不用逐个算 margin。</p>
+
+              <h4>二、主轴与侧轴：先分清方向再谈对齐</h4>
+              <ul>
+                <li><strong>主轴</strong>：子元素排列方向，默认横向（<code>row</code>）——导航栏就是横向主轴；</li>
+                <li><strong>侧轴</strong>：垂直于主轴的方向，默认纵向——控制一行元素的高低对齐；</li>
+                <li>改成 <code>flex-direction: column</code> 后两轴互换，比如页脚里竖着排列的“营业时间 / 地址 / 电话”。</li>
+              </ul>
+              <blockquote>
+                <p><strong>💡 自学关键：</strong>所有对齐属性先看当前主轴是横向还是纵向，否则 justify-content、align-items 一定会记混。</p>
+              </blockquote>
+
+              <h4>三、四大核心属性在咖啡店页面里的用法</h4>
+
+              <p><strong>1. <code>justify-content</code> —— 主轴对齐（导航怎么分布）</strong></p>
+              <ul>
+                <li><code>space-between</code>：<strong>导航栏首选</strong>——Logo 贴最左、点单按钮贴最右、链接在中间自动均分；</li>
+                <li><code>center</code>：Hero 区把点单按钮居中；</li>
+                <li><code>flex-start / flex-end</code>：靠左 / 靠右排列；<code>space-around</code>：每个元素两侧等距。</li>
+              </ul>
+
+              <p><strong>2. <code>align-items</code> —— 侧轴对齐（高低对齐）</strong></p>
+              <p>导航栏里 Logo 是图标、链接是文字、按钮更高，用 <code>align-items: center</code> 让它们<strong>垂直居中在一条基线上</strong>；特色卡片文字多少不同，用 <code>stretch</code>（默认）让一行卡片<strong>等高</strong>，页面更整齐。</p>
+
+              <p><strong>3. <code>flex-wrap</code> —— 空间不够时换不换行</strong></p>
+              <p>默认 <code>nowrap</code>：窗口变窄时，导航链接和特色卡片会被<strong>强行压缩变形</strong>。给特色卡片行加 <code>flex-wrap: wrap</code>，窄屏时卡片自动掉到下一行，不挤压（第 7 节响应式会大量用到）。</p>
+
+              <p><strong>4. <code>gap</code> —— 统一间距</strong></p>
+              <p>导航链接之间 <code>gap: 24px</code>、特色卡片之间 <code>gap: 20px</code>，一处设置、间距统一，不会像 margin 那样在首尾多出边距。</p>
+
+              <h4>四、Flex 适用场景（自学必记）</h4>
+              <ul>
+                <li>✅ 顶部导航栏、按钮组、标签行、卡片内部的“图标+文字”</li>
+                <li>✅ 特色卡片横排、页脚信息列、需要垂直居中的场景</li>
+                <li>❌ 产品菜单那种<strong>同时控制多行多列的九宫格</strong>——下一节交给 Grid。</li>
+              </ul>
+
+              <h4>五、自学高频误区</h4>
+              <ol>
+                <li>不看主轴方向就套对齐属性，效果和预期相反；</li>
+                <li>忘了 <code>flex-wrap: wrap</code>，窄屏下卡片被压扁；</li>
+                <li>用 margin 逐个控制间距，首尾留白错乱，应优先用 gap；</li>
+                <li>拿 Flex 硬做二维九宫格，疯狂嵌套——那是 Grid 的主场。</li>
+              </ol>
+
+              <blockquote>
+                <p><strong>📌 本节 Demo 学习指引：</strong>在配套 Flex 实验里切换对齐方式、主轴方向和换行开关，把左栏想象成咖啡店导航栏：justify-content 决定 Logo/链接/按钮怎么分，align-items 决定它们高低怎么齐。</p>
+              </blockquote>
+            </div>
+          </div>
+
+          <div class="tab-panel" data-panel="responsive-code">
+            <pre><code>&lt;!-- HTML：导航栏三个入口 --&gt;
+&lt;nav class="nav"&gt;
+  &lt;a href="#"&gt;首页&lt;/a&gt;
+  &lt;a href="#"&gt;列表&lt;/a&gt;
+  &lt;a href="#"&gt;设置&lt;/a&gt;
+&lt;/nav&gt;
+
+/* CSS：一维自适应排列 */
+.nav {
+  display: flex;               /* 开启 Flex，形成主轴与侧轴 */
+  flex-direction: row;         /* 主轴方向：row 横向 / column 纵向 */
+  justify-content: center;     /* 主轴对齐：整体居中 */
+  align-items: center;         /* 侧轴对齐：垂直居中 */
+  flex-wrap: wrap;             /* 空间不足自动换行 */
+  gap: 16px;                   /* 统一间距，两端不留多余边距 */
+}</code></pre>
+          </div>
+
+          <div class="tab-panel" data-panel="responsive-demo">
+            <div class="demo-shell textflow-demo-shell">
+              <div class="demo-guide-callout">
+                <strong>【Flex 交互实验】</strong>
+                Flex 用来解决一维布局，元素沿着主轴方向排列。切换主轴方向、对齐方式、换行开关，拖动 gap 滑块，实时观察子元素排布变化，理解主轴 / 侧轴，体会不换行时元素挤压现象。
+              </div>
+
+              <div class="textflow-demo-controls">
+                <label class="textflow-control-field">
+                  <span>主轴方向 flex-direction</span>
+                  <select id="direction-mode">
+                    <option value="row" selected>row（横向，默认）</option>
+                    <option value="column">column（纵向）</option>
+                  </select>
+                </label>
+
+                <label class="textflow-control-field">
+                  <span>主轴对齐 justify-content</span>
+                  <select id="justify-mode">
+                    <option value="flex-start">flex-start 起始端</option>
+                    <option value="center" selected>center 居中</option>
+                    <option value="flex-end">flex-end 末端</option>
+                    <option value="space-between">space-between 两端贴边</option>
+                    <option value="space-around">space-around 两侧均分</option>
+                  </select>
+                </label>
+
+                <label class="textflow-control-field">
+                  <span>侧轴对齐 align-items</span>
+                  <select id="align-mode">
+                    <option value="flex-start">flex-start 顶部对齐</option>
+                    <option value="center" selected>center 垂直居中</option>
+                    <option value="flex-end">flex-end 底部对齐</option>
+                    <option value="stretch">stretch 拉伸</option>
+                  </select>
+                </label>
+
+                <label class="textflow-check-field">
+                  <input id="wrap-toggle" type="checkbox" />
+                  <span>flex-wrap 自动换行</span>
+                </label>
+
+                <label class="textflow-range-field">
+                  <span>间距 gap（0 ~ 40px）</span>
+                  <input id="gap-range" type="range" min="0" max="40" step="2" value="12" />
+                  <strong id="gap-value">12px</strong>
+                </label>
+
+                <label class="textflow-range-field">
+                  <span>容器宽度（观察挤压/换行）</span>
+                  <input id="flex-width-range" type="range" min="240" max="620" step="10" value="620" />
+                  <strong id="flex-width-value">620px</strong>
+                </label>
+
+                <button id="flex-reset-btn" type="button">重置</button>
+              </div>
+
+              <div class="textflow-preview-grid flexlab-preview-grid">
+                <div class="textflow-panel">
+                  <div class="textflow-panel-title">当前 Flex 实验容器（display:flex）</div>
+                  <div class="flexlab-scene">
+                    <div class="flexlab-stage" id="flex-visualizer-stage">
+                      <div class="flexlab-block block-a">🏠 首页</div>
+                      <div class="flexlab-block block-b">📋 列表</div>
+                      <div class="flexlab-block block-c">⚙️ 设置</div>
+                      <div class="flexlab-block block-d">👤 我的</div>
+                    </div>
+                  </div>
+                  <p class="flexlab-note">
+                    取消勾选 <code>flex-wrap</code> 后拖动“容器宽度”滑块缩窄容器，可直观看到方块被<strong>挤压压缩</strong>；切换 <code>column</code> 后主轴变成纵向，能亲眼看到 justify-content、align-items 的作用互换，攻克主轴 / 侧轴最容易混淆的难点。
+                  </p>
+                </div>
+
+                <div class="textflow-panel reference-panel">
+                  <div class="textflow-panel-title">参考基准（普通文档流，未开 flex）</div>
+                  <div class="flexlab-scene">
+                    <div class="flexlab-reference">
+                      <div class="flexlab-block block-a">🏠 首页</div>
+                      <div class="flexlab-block block-b">📋 列表</div>
+                      <div class="flexlab-block block-c">⚙️ 设置</div>
+                      <div class="flexlab-block block-d">👤 我的</div>
+                    </div>
+                  </div>
+                  <p class="flexlab-note">
+                    同样的 4 个方块，不开启 flex：作为块级元素各自独占一行、自动撑满整行，无法横向排列——对比左侧，体会普通文档流与 Flex 一维排布的巨大差异。
+                  </p>
+                </div>
+              </div>
+
+              <div class="textflow-tip" id="flex-tip" aria-live="polite"></div>
+
+              <div class="demo-activity-guide">
+                <h5>学生自主实验任务</h5>
+                <ol class="experiment-checklist">
+                  <li><label><input type="checkbox" /> 主轴选择 <code>row</code>，修改 <code>justify-content</code>，观察子元素在<strong>水平主轴</strong>上的分布变化。</label></li>
+                  <li><label><input type="checkbox" /> 保持 <code>row</code>，修改 <code>align-items</code>，观察<strong>垂直侧轴</strong>对齐效果，尝试 center 实现垂直居中。</label></li>
+                  <li><label><input type="checkbox" /> 取消勾选 <code>flex-wrap</code>，拖动“容器宽度”缩窄容器，观察：元素挤压变形；再勾选开启 wrap，元素自动换行下沉。</label></li>
+                  <li><label><input type="checkbox" /> 拖动 gap 滑块，观察方块之间间距变化，对比右侧普通文档流，理解 gap 相比 margin 的优势。</label></li>
+                  <li><label><input type="checkbox" /> 切换 <code>flex-direction: column</code>，重新调整对齐属性，分清主轴侧轴发生翻转，体会对齐属性作用互换。</label></li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div class="self-test-panel hidden" id="flex-quiz">
+            <div class="self-test-header">
+              <h5>自学自测</h5>
+              <p>根据刚才的学习，判断 Flex 一维布局的轴线、对齐、换行与间距规则。</p>
+            </div>
+
+            <div class="quiz-item exam-style">
+              <div class="quiz-number">1</div>
+              <div class="quiz-content">
+                <p>选择：Flex 布局的核心是几维布局？它和 Grid 的核心区别是什么？</p>
+                <div class="choice-list">
+                  <label><input type="radio" name="fl-q1" value="一维布局" /> 一维布局（Grid 才是二维布局）</label>
+                  <label><input type="radio" name="fl-q1" value="二维布局" /> 二维布局</label>
+                  <label><input type="radio" name="fl-q1" value="没有区别" /> 一维、二维没有区别</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="quiz-item exam-style">
+              <div class="quiz-number">2</div>
+              <div class="quiz-content">
+                <p>判断：<code>justify-content</code> 控制<strong>主轴</strong>对齐，<code>align-items</code> 控制<strong>侧轴</strong>对齐。（ ）</p>
+                <div class="choice-list">
+                  <label><input type="radio" name="fl-q2" value="对" /> 对</label>
+                  <label><input type="radio" name="fl-q2" value="错" /> 错</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="quiz-item exam-style">
+              <div class="quiz-number">3</div>
+              <div class="quiz-content">
+                <p>简答：为什么 Flex 布局默认不会自动换行？一直不换行有什么弊端？</p>
+                <textarea id="fl-q3" rows="3" placeholder="提示：默认值是什么？空间不足时元素会怎样？"></textarea>
+              </div>
+            </div>
+
+            <div class="quiz-item exam-style">
+              <div class="quiz-number">4</div>
+              <div class="quiz-content">
+                <p>简答：用 <code>gap</code> 设置子元素间距，相比用 margin 有什么优势？</p>
+                <textarea id="fl-q4" rows="3" placeholder="提示：两端边距、间距叠加方面的差异"></textarea>
+              </div>
+            </div>
+
+            <div class="quiz-actions">
+              <button class="quiz-submit" type="button">提交</button>
+              <div class="quiz-score" aria-live="polite"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="detail" class="subsection section reveal">
+          <div class="section-heading">
+            <span>06 · Grid 布局</span>
+            <h2>二维布局：网格让页面更稳定、更有秩序</h2>
+          </div>
+
+          <div class="tab-group" role="tablist" aria-label="Grid布局切换">
+            <button class="tab-btn active" data-target="detail-explain" type="button">📘 讲解</button>
+            <button class="tab-btn" data-target="detail-code" type="button">💻 关键代码</button>
+            <button class="tab-btn" data-target="detail-demo" type="button">🎬 演示 Demo</button>
+            <button class="tab-btn quiz-tab-trigger" data-quiz-target="grid-quiz" type="button">自学自测</button>
+          </div>
+
+          <div class="tab-panel active" data-panel="detail-explain">
+            <div class="info-box">
+              <blockquote>
+                <p><strong>项目进度：</strong>上一节用 Flex 排好了导航和 3 张特色卡片。现在轮到咖啡店的核心模块——<strong>产品菜单区</strong>：6 款咖啡要排成整齐的多行多列，每列等宽、间距统一，本周主推款还要占两格做成大卡片。这种<strong>同时控制行和列的二维排布</strong>，正是 <strong>Grid 网格布局</strong>的主场。</p>
+              </blockquote>
+
+              <h3>本节自学目标：</h3>
+              <ol>
+                <li>理解 Grid 与 Flex 的核心区别：<strong>二维网格排布 vs 一维弹性排布</strong></li>
+                <li>结合产品菜单掌握网格轨道、比例单位 <code>fr</code>、行列定义</li>
+                <li>学会用跨列能力把“本周主推”做成焦点大卡片</li>
+                <li>掌握网格 gap 间距规则，让菜单矩阵整齐统一</li>
+                <li>明确 Grid 专属场景，避免 Flex、Grid 混用错乱</li>
+              </ol>
+
+              <h3>正文</h3>
+
+              <h4>一、Grid 核心本质：先划网格，再放咖啡</h4>
+              <p>Flex 的逻辑是元素沿一条线流动；Grid 的逻辑是<strong>容器先划分好行和列的网格，元素再依次落入格子</strong>。给菜单容器 <code>display: grid</code> 并定义 3 列，6 款咖啡就自动排成 2 行 × 3 列，窗口缩放时各列同步伸缩，永远整齐。</p>
+
+              <h4>二、网格轨道与 fr：菜单列宽怎么定</h4>
+              <p><code>grid-template-columns</code> 定义列轨道，宽度可以写像素、百分比，或 Grid 专属比例单位 <code>fr</code>：</p>
+              <ul>
+                <li><code>repeat(3, 1fr)</code>：菜单 3 列<strong>等宽</strong>，剩余空间平均分配——最常用；</li>
+                <li><code>2fr 1fr 1fr</code>：第一列（比如“套餐推荐”栏）占两份宽，形成主次布局；</li>
+                <li><code>200px 1fr 1fr</code>：左侧固定 200px 放分类筛选，右侧产品自适应——后台/点单页常见框架；</li>
+                <li><code>minmax(240px, 1fr)</code>：列宽不低于 240px，配合 auto-fit 可在窄屏自动少一列。</li>
+              </ul>
+              <p><code>fr</code> 按比例分配<strong>扣除固定宽和 gap 之后的剩余空间</strong>，不会挤压溢出，是自适应菜单矩阵的最佳选择；只会写死像素，窗口一变就会留白或撑破。</p>
+
+              <h4>三、本周主推：跨列与统一间距</h4>
+              <p>给第一张“本周主推·招牌拿铁”卡片加 <code>grid-column: 1 / span 2</code>，它从第 1 条网格线起<strong>横跨两列</strong>，立刻成为视觉焦点，后面的美式、卡布奇诺自动补位——这就是 Grid 制造页面层级的能力，Flex 很难在二维上直接做到。行列间距统一用 <code>gap: 16px</code>，相比逐个写 margin，<strong>第一行和最后一行外侧不会多出边距</strong>，菜单四周整齐对齐。</p>
+
+              <h4>四、Grid 适用场景（自学必记）</h4>
+              <ul>
+                <li>✅ 产品菜单九宫格、图片图库、首页多列框架、数据看板</li>
+                <li>✅ 需要跨行跨列、有焦点区块的图文混排</li>
+                <li>❌ 顶部导航、按钮组这种一维排列——用 Flex 更简单，不要为了用 Grid 而嵌套多余结构</li>
+              </ul>
+
+              <h4>五、自学高频误区</h4>
+              <ol>
+                <li>导航栏、按钮组也硬套 Grid，结构冗余——一维交给 Flex；</li>
+                <li>列宽只会写死像素，不会用 <code>fr</code>，屏幕变化就溢出或留白；</li>
+                <li>用 margin 逐个控制卡片间距，导致菜单边缘对不齐——用 gap；</li>
+                <li>不会跨列跨行，把主推款和普通款做成一样大，浪费了 Grid 的层级能力。</li>
+              </ol>
+
+              <blockquote>
+                <p><strong>📌 本节 Demo 学习指引：</strong>在 Grid 实验里把左栏想象成产品菜单：切换均等/比例/混合三种轨道看列宽变化，开启“首元素跨 2 列”看本周主推如何变成焦点大卡，并与右侧普通文档流对比，体会“先划网格、再放元素”。</p>
+              </blockquote>
+            </div>
+          </div>
+
+          <div class="tab-panel" data-panel="detail-code">
+            <pre><code>&lt;!-- HTML：九宫格卡片矩阵 --&gt;
+&lt;div class="board"&gt;
+  &lt;div class="grid-item feature"&gt;焦点大图&lt;/div&gt;
+  &lt;div class="grid-item"&gt;卡片2&lt;/div&gt;
+  &lt;div class="grid-item"&gt;卡片3&lt;/div&gt;
+  &lt;div class="grid-item"&gt;卡片4&lt;/div&gt;
+  &lt;div class="grid-item"&gt;卡片5&lt;/div&gt;
+  &lt;div class="grid-item"&gt;卡片6&lt;/div&gt;
+&lt;/div&gt;
+
+/* CSS：二维规整网格 */
+.board {
+  display: grid;                        /* 开启 Grid 二维布局 */
+  grid-template-columns: repeat(3, 1fr);/* 3 个等宽列，fr 按比例分配剩余空间 */
+  gap: 16px;                            /* 行列统一间距，边缘无多余边距 */
+}
+
+.board .feature {
+  grid-column: 1 / span 2;              /* 焦点卡片从第1线起横跨 2 列 */
+}</code></pre>
+          </div>
+
+          <div class="tab-panel" data-panel="detail-demo">
+            <div class="demo-shell textflow-demo-shell">
+              <div class="demo-guide-callout">
+                <strong>【Grid 二维网格实验】</strong>
+                Grid 的思维是「容器先划分网格，元素再落入网格」。在均等 / 比例 / 固定+自适应三种网格模式之间切换，拖动 gap 间距、开启首元素跨 2 列，实时观察 fr 比例分配、规整间距与跨列层级，并与右侧普通文档流对比，彻底分清一维 Flex 与二维 Grid。
+              </div>
+
+              <div class="textflow-demo-controls">
+                <label class="textflow-control-field">
+                  <span>网格模式 grid-template-columns</span>
+                  <select id="gridlab-mode">
+                    <option value="even" selected>均等网格（1fr 1fr 1fr）</option>
+                    <option value="ratio">比例网格（2fr 1fr 1fr 主次布局）</option>
+                    <option value="mixed">混合网格（200px 1fr 1fr 固定+自适应）</option>
+                  </select>
+                </label>
+
+                <label class="textflow-range-field">
+                  <span>网格间距 gap（0 ~ 40px）</span>
+                  <input id="gridlab-gap" type="range" min="0" max="40" step="2" value="16" />
+                  <strong id="gridlab-gap-value">16px</strong>
+                </label>
+
+                <label class="textflow-check-field">
+                  <input id="gridlab-feature-toggle" type="checkbox" />
+                  <span>首元素跨 2 列 grid-column: span 2</span>
+                </label>
+
+                <button id="gridlab-reset-btn" type="button">重置</button>
+              </div>
+
+              <div class="textflow-preview-grid flexlab-preview-grid">
+                <div class="textflow-panel">
+                  <div class="textflow-panel-title">当前 Grid 实验容器（display:grid）</div>
+                  <div class="flexlab-scene">
+                    <div class="gridlab-stage" id="gridlab-surface">
+                      <div class="grid-item feature">☕ 本周主推·招牌拿铁</div>
+                      <div class="grid-item block-b">🧊 冰美式</div>
+                      <div class="grid-item block-c">🥛 卡布奇诺</div>
+                      <div class="grid-item block-d">🍫 摩卡</div>
+                      <div class="grid-item block-a">🍮 焦糖玛奇朵</div>
+                      <div class="grid-item block-b">🍵 抹茶拿铁</div>
+                    </div>
+                  </div>
+                  <p class="flexlab-note">
+                    先在脑中画出 3 条列轨道，6 款咖啡依次<strong>落入格子</strong>。切换“比例网格”观察 2:1:1 的主次宽度；切换“混合网格”观察固定 200px 分类栏与自适应产品列共存；开启跨列，<strong>本周主推</strong>占据两条轨道，立刻形成 <strong>大卡片主视觉 + 小卡片辅助</strong>的菜单层级。
+                  </p>
+                </div>
+
+                <div class="textflow-panel reference-panel">
+                  <div class="textflow-panel-title">参考基准（普通文档流，未开 grid）</div>
+                  <div class="flexlab-scene">
+                    <div class="gridlab-reference">
+                      <div class="grid-item feature">☕ 本周主推·招牌拿铁</div>
+                      <div class="grid-item block-b">🧊 冰美式</div>
+                      <div class="grid-item block-c">🥛 卡布奇诺</div>
+                      <div class="grid-item block-d">🍫 摩卡</div>
+                      <div class="grid-item block-a">🍮 焦糖玛奇朵</div>
+                      <div class="grid-item block-d">🍵 抹茶拿铁</div>
+                    </div>
+                  </div>
+                  <p class="flexlab-note">
+                    同样 6 款咖啡，不开启 grid：作为块级元素全部<strong>纵向堆叠、各占一整行</strong>，既没有列，也没有比例和规整间距——对比左侧，体会产品菜单为什么必须用二维网格。
+                  </p>
+                </div>
+              </div>
+
+              <div class="textflow-tip" id="gridlab-tip" aria-live="polite"></div>
+              <div class="flex-code-output">
+                <code id="gridlab-css-output"></code>
+              </div>
+
+              <div class="demo-activity-guide">
+                <h5>学生自主实验任务</h5>
+                <ol class="experiment-checklist">
+                  <li><label><input type="checkbox" /> 切换三种网格模式，观察列宽变化，总结 <code>fr</code> 单位对比固定像素的<strong>自适应优势</strong>。</label></li>
+                  <li><label><input type="checkbox" /> 拖动 gap 滑块，体会 Grid 网格间距<strong>行列均匀、容器四周无多余边距</strong>，比逐个写 margin 更稳定。</label></li>
+                  <li><label><input type="checkbox" /> 开启跨列效果，观察布局如何从「整齐平铺」变成「<strong>有主次、有层级</strong>」的主焦点布局。</label></li>
+                  <li><label><input type="checkbox" /> 结合左右对比总结：<strong>Flex 一维、负责组件单行排列；Grid 二维、负责页面框架、矩阵规整与层级布局</strong>。</label></li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div class="self-test-panel hidden" id="grid-quiz">
+            <div class="self-test-header">
+              <h5>自学自测</h5>
+              <p>根据刚才的学习，判断 Grid 二维网格的轨道、fr、跨列与间距规则。</p>
+            </div>
+
+            <div class="quiz-item exam-style">
+              <div class="quiz-number">1</div>
+              <div class="quiz-content">
+                <p>选择：Grid 与 Flex 最核心的区别是什么？</p>
+                <div class="choice-list">
+                  <label><input type="radio" name="gr-q1" value="二维网格" /> Grid 是二维网格排布，Flex 是一维弹性排布</label>
+                  <label><input type="radio" name="gr-q1" value="没有区别" /> 两者没有本质区别，可以随意互换</label>
+                  <label><input type="radio" name="gr-q1" value="Grid只能做一维" /> Grid 只能做一维，Flex 才能做二维</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="quiz-item exam-style">
+              <div class="quiz-number">2</div>
+              <div class="quiz-content">
+                <p>判断：<code>fr</code> 单位会把容器扣除固定宽、间距后的<strong>剩余空间</strong>按比例分配，天然适配响应式。（ ）</p>
+                <div class="choice-list">
+                  <label><input type="radio" name="gr-q2" value="对" /> 对</label>
+                  <label><input type="radio" name="gr-q2" value="错" /> 错</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="quiz-item exam-style">
+              <div class="quiz-number">3</div>
+              <div class="quiz-content">
+                <p>填空：让第一个卡片从第 1 条网格线开始<strong>横跨 2 列</strong>，应写为 <code>grid-column: <input type="text" id="gr-q3" placeholder="例如：1 / span 2" /></code>。</p>
+              </div>
+            </div>
+
+            <div class="quiz-item exam-style">
+              <div class="quiz-number">4</div>
+              <div class="quiz-content">
+                <p>简答：用 <code>gap</code> 控制网格间距，相比给每个卡片手动设置 margin 有什么优势？</p>
+                <textarea id="gr-q4" rows="3" placeholder="提示：第一行/最后一行、四周边距方面的差异"></textarea>
+              </div>
+            </div>
+
+            <div class="quiz-actions">
+              <button class="quiz-submit" type="button">提交</button>
+              <div class="quiz-score" aria-live="polite"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="responsive-layout" class="subsection section reveal">
+          <div class="section-heading">
+            <span>07 · 响应式布局</span>
+            <h2>屏幕尺寸变化时，布局也要保持稳定与适配</h2>
+          </div>
+
+          <div class="tab-group" role="tablist" aria-label="响应式布局切换">
+            <button class="tab-btn active" data-target="resplab-explain" type="button">📘 讲解</button>
+            <button class="tab-btn" data-target="resplab-code" type="button">💻 关键代码</button>
+            <button class="tab-btn" data-target="resplab-demo" type="button">🎬 演示 Demo</button>
+            <button class="tab-btn quiz-tab-trigger" data-quiz-target="responsive-quiz" type="button">自学自测</button>
+          </div>
+
+          <div class="tab-panel active" data-panel="resplab-explain">
+            <div class="info-box">
+              <blockquote>
+                <p><strong>项目进度：</strong>「晨光咖啡」页面在电脑上已经排好了：吸顶导航、横排特色卡、九宫格菜单。但顾客更多是用<strong>手机</strong>点单——同一套页面在 375px 手机上会挤成一团。本节要让这<strong>同一套 HTML/CSS</strong> 在手机、平板、电脑上都好用：手机单列、平板双列、桌面多列，这就是<strong>响应式布局</strong>。</p>
+              </blockquote>
+
+              <h3>本节自学目标：</h3>
+              <ol>
+                <li>理解响应式核心：不是堆样式，而是同一套内容在多端保持可读可用</li>
+                <li>掌握移动端优先与优雅降级两种思路的差异</li>
+                <li>读懂 <code>@media</code> 断点，会写咖啡店页面单列 → 双列 → 多列的切换</li>
+                <li>熟练使用 <code>rem</code>、<code>vw</code>、<code>vh</code> 让文字、Hero 大图随屏缩放</li>
+                <li>守住底线：小屏不溢出、点单按钮不丢失、菜单始终可读</li>
+              </ol>
+
+              <h3>正文</h3>
+
+              <h4>一、咖啡店页面在三端应该长什么样</h4>
+              <ul>
+                <li><strong>手机（≤768px）</strong>：导航折叠为 Logo+点单按钮、特色卡片单列、菜单九宫格降为单列或双列、Hero 字号变小——保证拇指能点、文字能读；</li>
+                <li><strong>平板（769~1023px）</strong>：特色卡片恢复 3 列、菜单变 2~3 列；</li>
+                <li><strong>桌面（≥1024px）</strong>：完整多列网格、最大间距、横幅占满视口宽度。</li>
+              </ul>
+              <p><strong>终极原则：</strong>页面不崩溃、内容不挤压、核心功能（看菜单、点单）不丢失。</p>
+
+              <h4>二、移动端优先：先做好手机上的咖啡店</h4>
+              <p>推荐用 <strong>Mobile First</strong>：默认样式就是手机版（单列、小间距），再用 <code>@media (min-width: 769px)</code> 逐步为平板、桌面“增强”成多列。反过来“先做桌面再压缩到手机”（优雅降级）很容易出现按钮挤爆、菜单溢出——配套 Demo 里可以直接对比这两种策略在 375px 下的差异。</p>
+
+              <h4>三、@media 断点：菜单列数的开关</h4>
+              <p>断点就是屏幕宽度阈值。菜单区的经典写法：</p>
+              <ul>
+                <li>默认（手机）：<code>grid-template-columns: 1fr</code> 单列；</li>
+                <li><code>@media (min-width: 769px)</code>：升级为 <code>repeat(2, 1fr)</code>；</li>
+                <li><code>@media (min-width: 1024px)</code>：升级为 <code>repeat(3/4, 1fr)</code> 完整网格。</li>
+              </ul>
+              <p>前提：HTML 的 <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</code> 必须声明，否则手机会按桌面宽度缩小整个页面，媒体查询全部失效。</p>
+
+              <h4>四、rem 与 vw / vh：让尺寸随屏缩放</h4>
+              <ul>
+                <li><strong>rem</strong>：相对 &lt;html&gt; 根字号。配合断点把根字号从 14px 调到 16px，菜单名、价格、间距<strong>整体等比缩放</strong>，不用逐个改；</li>
+                <li><strong>vw / vh</strong>：1vw 等于视口宽度的 1%。Hero 横幅用 <code>height: 40vh</code>、宽度 100%，在任何屏幕上都保持舒适比例；</li>
+                <li>固定 <code>px</code> 写死四列卡片，手机上必然横向溢出——Demo 的“固定 px”模式会直接演示这条滚动条。</li>
+              </ul>
+
+              <h4>五、自学高频误区</h4>
+              <ol>
+                <li>以为响应式要为每种屏幕重写一套页面——核心只是断点处调整布局；</li>
+                <li>尺寸全写死 px，小屏溢出裁切；</li>
+                <li>先做桌面再逆向适配，小屏错乱难补救；</li>
+                <li>断点处只改列数、不改字号间距，临界尺寸下比例突兀。</li>
+              </ol>
+
+              <blockquote>
+                <p><strong>📌 本节 Demo 学习指引：</strong>把实验里的卡片当成产品菜单：切换手机/平板/桌面看单列→双列→多列；切到“固定 px”看小屏溢出；切换“桌面端降级”看 375px 下缺少单列回退的错乱——这就是移动端优先更稳的原因。</p>
+              </blockquote>
+            </div>
+          </div>
+
+          <div class="tab-panel" data-panel="resplab-code">
+            <pre><code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
+&lt;!-- 必须声明视口，否则手机会按桌面宽度缩放网页 --&gt;
+
+/* 移动端优先：默认就是小屏单列基础样式 */
+.card-list {
+  display: grid;
+  grid-template-columns: 1fr;   /* 手机：单列 */
+  gap: 1rem;                    /* rem：相对根字号的等比间距 */
+  font-size: 1rem;
+}
+
+/* 断点1：≥769px 平板，升级为双列 */
+@media (min-width: 769px) {
+  .card-list { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* 断点2：≥1024px 桌面，升级为四列完整网格 */
+@media (min-width: 1024px) {
+  .card-list { grid-template-columns: repeat(4, 1fr); }
+}
+
+.banner {
+  width: 100vw;                 /* vw：占满视口宽度 */
+  height: 40vh;                 /* vh：占视口高度的 40% */
+}</code></pre>
+          </div>
+
+          <div class="tab-panel" data-panel="resplab-demo">
+            <div class="demo-shell textflow-demo-shell">
+              <div class="demo-guide-callout">
+                <strong>【响应式设备模拟实验】</strong>
+                核心目的：亲眼看到<strong>「同一套代码适配所有屏幕」</strong>。一键切换手机 / 平板 / 桌面三种真机视口，再对比「vw+rem 自适应 vs 固定 px」「移动端优先 vs 桌面端降级」，理解断点切换、相对单位与优雅降级。
+              </div>
+
+              <div class="resplab-control-block">
+                <span class="resplab-control-label">① 模拟屏幕</span>
+                <div class="resplab-segmented" id="resplab-device-group" role="group" aria-label="设备视口">
+                  <button type="button" class="resplab-seg-btn" data-device="phone">📱 手机 375px</button>
+                  <button type="button" class="resplab-seg-btn" data-device="tablet">📲 平板 768px</button>
+                  <button type="button" class="resplab-seg-btn active" data-device="desktop">🖥️ 桌面 1200px</button>
+                </div>
+              </div>
+
+              <div class="resplab-control-block">
+                <span class="resplab-control-label">② 适配单位</span>
+                <div class="resplab-segmented" id="resplab-unit-group" role="group" aria-label="适配单位">
+                  <button type="button" class="resplab-seg-btn active" data-unit="adaptive">✅ vw + rem 自适应</button>
+                  <button type="button" class="resplab-seg-btn danger" data-unit="px">❌ 固定 px 布局</button>
+                </div>
+              </div>
+
+              <div class="resplab-control-block">
+                <span class="resplab-control-label">③ 布局策略</span>
+                <div class="resplab-segmented" id="resplab-strategy-group" role="group" aria-label="布局策略">
+                  <button type="button" class="resplab-seg-btn active" data-strategy="mobile">✅ 移动端优先（推荐）</button>
+                  <button type="button" class="resplab-seg-btn danger" data-strategy="desktop">⚠️ 桌面端降级（错误示范）</button>
+                </div>
+              </div>
+
+              <div class="textflow-demo-controls">
+                <label class="textflow-range-field">
+                  <span>自定义视口宽度（320 ~ 1200px）</span>
+                  <input id="resplab-width" type="range" min="320" max="1200" step="1" value="1200" />
+                  <strong id="resplab-width-value">1200px</strong>
+                </label>
+                <button id="resplab-reset-btn" type="button">重置</button>
+              </div>
+
+              <div class="textflow-panel">
+                <div class="textflow-panel-title">模拟屏幕（内部就是同一份网页内容）</div>
+                <div class="resplab-viewport-wrap">
+                  <div class="resplab-viewport" id="resplab-viewport">
+                    <div class="resplab-mock-header">☕ 晨光咖啡 · 顶部导航</div>
+                    <div class="resplab-banner" id="resplab-banner">🎊 新用户首单立减 5 元（小屏优雅降级时自动隐藏）</div>
+                    <div class="resplab-card-list" id="resplab-card-list">
+                      <div class="resplab-card">☕ 招牌拿铁</div>
+                      <div class="resplab-card">🧊 冰美式</div>
+                      <div class="resplab-card">🥛 卡布奇诺</div>
+                      <div class="resplab-card">🍫 摩卡</div>
+                      <div class="resplab-card">🍮 焦糖玛奇朵</div>
+                      <div class="resplab-card">🍵 抹茶拿铁</div>
+                      <div class="resplab-card">🥐 可颂</div>
+                      <div class="resplab-card">🍰 提拉米苏</div>
+                    </div>
+                  </div>
+                </div>
+                <p class="flexlab-note">
+                  桌面看<strong>四列完整网格</strong>，平板自动降为<strong>双列</strong>，手机精简为<strong>单列</strong>并隐藏横幅；切到「固定 px」再选手机，固定四列会<strong>溢出、横向滚动、被裁切</strong>；切到「桌面端降级」再选手机，会看到双列强行挤在小屏上——这正是课文要规避的坑。
+                </p>
+              </div>
+
+              <div class="textflow-tip" id="resplab-tip" aria-live="polite"></div>
+
+              <div class="demo-activity-guide">
+                <h5>学生自主实验任务</h5>
+                <ol class="experiment-checklist">
+                  <li><label><input type="checkbox" /> 切换三种屏幕尺寸，观察<strong>同一套代码如何自动切换单列 / 双列 / 四列布局</strong>，理解 @media 断点作用。</label></li>
+                  <li><label><input type="checkbox" /> 切换「固定 px / 自适应单位」并选到手机屏，对比屏幕缩小时的布局差异，掌握<strong>为什么响应式必须用相对单位</strong>。</label></li>
+                  <li><label><input type="checkbox" /> 分别体验「移动端优先」和「桌面降级」两种模式并停在手机屏，理解两者<strong>小屏适配稳定性</strong>的差异。</label></li>
+                  <li><label><input type="checkbox" /> 观察手机端横幅自动隐藏，总结优雅降级逻辑：<strong>大屏丰富、小屏精简、核心内容永远可用</strong>。</label></li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div class="self-test-panel hidden" id="responsive-quiz">
+            <div class="self-test-header">
+              <h5>自学自测</h5>
+              <p>根据刚才的学习，判断响应式布局的本质、适配思路、媒体查询与相对单位。</p>
+            </div>
+
+            <div class="quiz-item exam-style">
+              <div class="quiz-number">1</div>
+              <div class="quiz-content">
+                <p>选择：响应式布局最核心的目标是什么？</p>
+                <div class="choice-list">
+                  <label><input type="radio" name="rs-q1" value="同内容适配" /> 让同一套内容在不同屏幕下始终可读、可用、视觉舒适</label>
+                  <label><input type="radio" name="rs-q1" value="堆样式" /> 为每种设备堆砌尽量复杂的专属样式</label>
+                  <label><input type="radio" name="rs-q1" value="只适配手机" /> 只需要适配手机一种设备</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="quiz-item exam-style">
+              <div class="quiz-number">2</div>
+              <div class="quiz-content">
+                <p>判断：现代前端主流采用<strong>移动端优先</strong>，先写小屏基础样式，再用 <code>min-width</code> 断点向大屏逐步增强。（ ）</p>
+                <div class="choice-list">
+                  <label><input type="radio" name="rs-q2" value="对" /> 对</label>
+                  <label><input type="radio" name="rs-q2" value="错" /> 错</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="quiz-item exam-style">
+              <div class="quiz-number">3</div>
+              <div class="quiz-content">
+                <p>选择：要让网页在<strong>视口宽度 ≥ 1024px</strong> 时把卡片切成四列，正确的媒体查询写法是？</p>
+                <div class="choice-list">
+                  <label><input type="radio" name="rs-q3" value="min-width" /> <code>@media (min-width: 1024px)</code></label>
+                  <label><input type="radio" name="rs-q3" value="max-width" /> <code>@media (max-width: 1024px)</code></label>
+                  <label><input type="radio" name="rs-q3" value="screen" /> <code>@media screen 1024px</code></label>
+                </div>
+              </div>
+            </div>
+
+            <div class="quiz-item exam-style">
+              <div class="quiz-number">4</div>
+              <div class="quiz-content">
+                <p>简答：移动端优先的适配思路，相比桌面端降级有什么优势？</p>
+                <textarea id="rs-q4" rows="3" placeholder="提示：小屏挤压、代码量、兼容性、核心内容方面"></textarea>
+              </div>
+            </div>
+
+            <div class="quiz-item exam-style">
+              <div class="quiz-number">5</div>
+              <div class="quiz-content">
+                <p>填空：相对于浏览器视口宽度，<code>1vw</code> 等于屏幕可视宽度的 <input type="text" id="rs-q5" placeholder="填数字+%" style="width:90px" />；而 <code>rem</code> 是相对于 <input type="text" id="rs-q5b" placeholder="哪个元素" style="width:130px" /> 的字号。</p>
+              </div>
+            </div>
+
+            <div class="quiz-item exam-style">
+              <div class="quiz-number">6</div>
+              <div class="quiz-content">
+                <p>简答：rem 和 vw 单位的适配场景有什么区别？为什么不全程使用 px？</p>
+                <textarea id="rs-q6" rows="3" placeholder="提示：rem 适合什么、vw 适合什么、px 在多屏下的问题"></textarea>
+              </div>
+            </div>
+
+            <div class="quiz-actions">
+              <button class="quiz-submit" type="button">提交</button>
+              <div class="quiz-score" aria-live="polite"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="visual-detail" class="subsection section reveal">
+          <div class="section-heading">
+            <span>08 · 视觉细节</span>
+            <h2>间距、对齐、层级与颜色：决定页面是否“高级”</h2>
+          </div>
+
+          <div class="tab-group" role="tablist" aria-label="视觉细节切换">
+            <button class="tab-btn active" data-target="visual-explain" type="button">📘 讲解</button>
+            <button class="tab-btn" data-target="visual-code" type="button">💻 关键代码</button>
+            <button class="tab-btn" data-target="visual-demo" type="button">🎬 演示 Demo</button>
+            <button class="tab-btn quiz-tab-trigger" data-quiz-target="visual-quiz" type="button">自学自测</button>
+          </div>
+
+          <div class="tab-panel active" data-panel="visual-explain">
+            <div class="info-box">
+              <blockquote>
+                <p><strong>项目进度：</strong>经过前七节，「晨光咖啡」页面功能已经齐全、三端都能适配，但看起来还像一份“能用的作业”而不是“想下单的店”。最后一步是视觉收尾：统一间距、做出字体层级、给菜单卡片加圆角阴影、给点单按钮加 hover 反馈——<strong>布局决定骨架，细节决定气质</strong>，这一节让页面从“整齐”变成“有质感、值得信任”。</p>
+              </blockquote>
+
+              <h3>本节自学目标：</h3>
+              <ol>
+                <li>理解视觉细节不是装饰，而是规范、层级、秩序感的体现</li>
+                <li>掌握间距、字体、圆角阴影、对齐四大规范在咖啡店页面的落地</li>
+                <li>学会用三层字体层级区分咖啡名、描述、价格</li>
+                <li>掌握点单按钮 hover / active 交互反馈规则</li>
+                <li>规避随意调数值、无层级、乱圆角等新手误区</li>
+              </ol>
+
+              <h3>正文</h3>
+
+              <h4>一、间距系统：给咖啡店页面统一“呼吸节奏”</h4>
+              <p>新手最大的通病是每个间距都凭感觉写 13px、17px、22px。专业做法是采用 <strong>8px 基准体系</strong>：菜单卡片内边距 16px、卡片间距 16/24px、区块间距 32px，全部取 8 的倍数。导航到 Hero、Hero 到菜单、菜单到页脚的留白节奏一致，页面立刻显得规整。</p>
+
+              <h4>二、字体三层级：让顾客一眼找到重点</h4>
+              <ul>
+                <li><strong>主标题</strong>：Hero 宣传语最大最粗最深，承担分区作用；</li>
+                <li><strong>正文</strong>：咖啡名称、介绍文字字号适中、可读性最强；</li>
+                <li><strong>辅助</strong>：价格备注、“月售 320 杯”这类信息字号偏小、颜色偏浅。</li>
+              </ul>
+              <p>层级的本质是用样式区分信息重要程度——所有文字一样大，顾客就抓不住“该看咖啡名还是该看价格”。</p>
+
+              <h4>三、统一圆角与柔和阴影：菜单卡片的质感来源</h4>
+              <ul>
+                <li><strong>圆角</strong>：菜单卡片、点单按钮、输入框统一同一套圆角（如卡片 12px、按钮 999px 胶囊形），不要每张卡片弧度不同；圆角让页面更柔和、现代、有亲和力；</li>
+                <li><strong>阴影</strong>：卡片用轻量、低透明度的柔和阴影做出悬浮分层，hover 时阴影略微加深；切忌厚重发黑的投影。</li>
+              </ul>
+
+              <h4>四、对齐：成本最低的专业感</h4>
+              <p>所有卡片左边界对齐、卡片内图片与文字左对齐、价格与加购按钮在卡片底部统一对齐。参差一个像素，页面就显得粗糙。配合 Grid/Flex，对齐几乎是自动完成的——这也是前面布局技术的价值。</p>
+
+              <h4>五、交互反馈：让点单按钮“会回应”</h4>
+              <ul>
+                <li><strong>hover</strong>：按钮轻微变色、上浮 1~2px、浅阴影浮现，告诉顾客“我可以点”；</li>
+                <li><strong>active</strong>：按下时轻微缩小、颜色加深，反馈“点单成功”的触感；</li>
+              </ul>
+              <p>变化要柔和轻微（配合 <code>transition</code>），不突兀。导航链接、菜单卡片、加购按钮都应有状态反馈。</p>
+
+              <h4>六、自学高频误区</h4>
+              <ol>
+                <li>间距随手写数值，整页没有统一节奏——用 8px 倍数；</li>
+                <li>所有文字一样大，页面扁平无重点——建三层级；</li>
+                <li>圆角阴影每张卡片不一样、阴影又黑又重；</li>
+                <li>按钮没有 hover/active，页面像一张不能点的图片；</li>
+                <li>一味堆特效，反而破坏对齐和秩序——高级感来自规范统一，不是装饰多。</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="tab-panel" data-panel="visual-code">
+            <div class="info-box">
+              <p>下面是给「晨光咖啡」页面做视觉收尾的关键 CSS：先把间距、圆角、阴影<strong>抽成统一变量</strong>，再用在菜单卡片和点单按钮上——规范统一，才不会出现六张卡片六个样。</p>
+            </div>
+            <pre><code>/* ===== 1. 设计变量：间距 / 圆角 / 阴影只允许取这些值（8px 体系） ===== */
+:root {
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --radius-card: 12px;   /* 菜单卡片统一圆角 */
+  --radius-pill: 999px;  /* 点单按钮胶囊形 */
+  --shadow-card: 0 2px 8px rgba(120, 72, 32, .08);
+  --shadow-hover: 0 8px 20px rgba(120, 72, 32, .16);
+}
+
+/* ===== 2. 菜单卡片：统一内边距、圆角、阴影 + 三层字体层级 ===== */
+.coffee-card {
+  padding: var(--space-2);                 /* 16px 内部留白 */
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  transition: box-shadow .2s, transform .2s;
+}
+.coffee-card h4 { font-size: 18px; font-weight: 700; color: #3b2a1a; } /* 咖啡名 */
+.coffee-card p  { font-size: 14px; color: #6b5d4f; }                    /* 描述 */
+.coffee-card small { font-size: 12px; color: #a0958a; }                 /* 月售等辅助信息 */
+
+/* ===== 3. 点单按钮：hover 上浮 + active 按压，过渡要柔和 ===== */
+.order-btn {
+  border-radius: var(--radius-pill);
+  transition: background .2s, transform .15s, box-shadow .2s;
+}
+.order-btn:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);            /* 轻微上浮 */
+  box-shadow: var(--shadow-hover);
+}
+.order-btn:active {
+  transform: translateY(0) scale(.97);    /* 按压缩小 */
+}
+
+/* ===== 4. 区块节奏：区块间距大、卡片间距小（8 的倍数） ===== */
+.menu-section { margin-bottom: var(--space-4); }
+.coffee-grid  { gap: var(--space-2); }</code></pre>
+          </div>
+
+          <div class="tab-panel" data-panel="visual-demo">
+            <div class="demo-shell textflow-demo-shell">
+              <div class="demo-guide-callout">
+                <strong>【视觉规范对照实验】</strong>
+                核心目的：直观看见<strong>「规范 = 质感，杂乱 = 廉价」</strong>。左栏是新手无规范错误示范（间距乱、无层级、直角无阴影、对齐混乱、按钮死板），右栏随下方 5 个开关逐项应用规范。请<strong>一次只关一个开关</strong>，单点验证每个视觉细节的作用。
+              </div>
+
+              <div class="vislab-controls">
+                <label class="vislab-switch">
+                  <input type="checkbox" id="vislab-spacing" checked />
+                  <span>① 8/16px 规范间距</span>
+                </label>
+                <label class="vislab-switch">
+                  <input type="checkbox" id="vislab-typography" checked />
+                  <span>② 字体层级区分</span>
+                </label>
+                <label class="vislab-switch">
+                  <input type="checkbox" id="vislab-radius" checked />
+                  <span>③ 统一圆角 + 柔和阴影</span>
+                </label>
+                <label class="vislab-switch">
+                  <input type="checkbox" id="vislab-align" checked />
+                  <span>④ 全局统一对齐</span>
+                </label>
+                <label class="vislab-switch">
+                  <input type="checkbox" id="vislab-interaction" checked />
+                  <span>⑤ 交互状态反馈</span>
+                </label>
+                <button id="vislab-reset-btn" type="button">重置（全部规范开启）</button>
+              </div>
+
+              <div class="textflow-preview-grid flexlab-preview-grid">
+                <!-- 左栏：永久杂乱错误示范 -->
+                <div class="textflow-panel reference-panel">
+                  <div class="textflow-panel-title">❌ 无规范 · 新手错误示范</div>
+                  <div class="vislab-stage vislab-bad">
+                    <h3 class="vislab-title">今日咖啡推荐</h3>
+                    <p class="vislab-meta">更新时间：2026-09-16</p>
+                    <div class="vislab-card">
+                      <h4>招牌拿铁</h4>
+                      <p>浓缩咖啡搭配丝滑蒸奶，口感绵密柔和。</p>
+                      <small>月售 320 杯</small>
+                    </div>
+                    <div class="vislab-card">
+                      <h4>冰美式</h4>
+                      <p>双份浓缩加冰水，清爽回甘、提神首选。</p>
+                      <small>月售 210 杯</small>
+                    </div>
+                    <button type="button" class="vislab-btn">立即点单</button>
+                  </div>
+                </div>
+
+                <!-- 右栏：随开关应用规范的标准示范 -->
+                <div class="textflow-panel">
+                  <div class="textflow-panel-title">✅ 规范化 · 标准示范</div>
+                  <div class="vislab-stage vislab-good" id="vislab-good">
+                    <h3 class="vislab-title">今日咖啡推荐</h3>
+                    <p class="vislab-meta">更新时间：2026-09-16</p>
+                    <div class="vislab-card">
+                      <h4>招牌拿铁</h4>
+                      <p>浓缩咖啡搭配丝滑蒸奶，口感绵密柔和。</p>
+                      <small>月售 320 杯</small>
+                    </div>
+                    <div class="vislab-card">
+                      <h4>冰美式</h4>
+                      <p>双份浓缩加冰水，清爽回甘、提神首选。</p>
+                      <small>月售 210 杯</small>
+                    </div>
+                    <button type="button" class="vislab-btn">立即点单</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="textflow-tip" id="vislab-tip" aria-live="polite"></div>
+
+              <div class="demo-activity-guide">
+                <h5>学生自主实验任务</h5>
+                <ol class="experiment-checklist">
+                  <li><label><input type="checkbox" /> 单独关闭【① 规范间距】，观察右栏留白杂乱、节奏混乱，总结 8px/16px 统一间距体系的优势。</label></li>
+                  <li><label><input type="checkbox" /> 单独关闭【② 字体层级】，对比标题/正文/辅助文字变得一样后的阅读感受，理解层级区分主次、引导阅读的价值。</label></li>
+                  <li><label><input type="checkbox" /> 单独关闭【③ 圆角阴影】，感受卡片从精致柔和变生硬扁平，掌握轻量质感样式的适配场景。</label></li>
+                  <li><label><input type="checkbox" /> 单独关闭【④ 统一对齐】和【⑤ 交互反馈】，鼠标移到按钮上点击，对比有无 hover/active 的体验差距。</label></li>
+                  <li><label><input type="checkbox" /> 全部关闭后与左栏对比，再一键重置，总结：<strong>页面高级感来自规范统一，而非过度装饰</strong>。</label></li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div class="self-test-panel hidden" id="visual-quiz">
+            <div class="self-test-header">
+              <h5>自学自测</h5>
+              <p>根据刚才的学习，回答视觉细节中的间距、字体层级、圆角阴影与交互状态问题。</p>
+            </div>
+
+            <div class="quiz-item exam-style">
+              <div class="quiz-number">1</div>
+              <div class="quiz-content">
+                <p>简答：为什么页面需要统一的 8px / 16px 间距体系，而不是随意设置间距？</p>
+                <textarea id="vs-q1" rows="3" placeholder="提示：留白节奏、统一规整、避免排版错乱方面"></textarea>
+              </div>
+            </div>
+
+            <div class="quiz-item exam-style">
+              <div class="quiz-number">2</div>
+              <div class="quiz-content">
+                <p>简答：字体层级分为哪三层？建立文字层级的目的是什么？</p>
+                <textarea id="vs-q2" rows="3" placeholder="提示：主标题 / 正文 / 辅助说明；区分信息权重"></textarea>
+              </div>
+            </div>
+
+            <div class="quiz-item exam-style">
+              <div class="quiz-number">3</div>
+              <div class="quiz-content">
+                <p>简答：圆角和阴影在页面中的核心作用是什么？</p>
+                <textarea id="vs-q3" rows="3" placeholder="提示：圆角带来什么感觉；阴影制造什么效果"></textarea>
+              </div>
+            </div>
+
+            <div class="quiz-item exam-style">
+              <div class="quiz-number">4</div>
+              <div class="quiz-content">
+                <p>简答：给元素添加 hover、active 状态的意义是什么？</p>
+                <textarea id="vs-q4" rows="3" placeholder="提示：可点击提示、点击成功反馈、页面可感知"></textarea>
+              </div>
+            </div>
+
+            <div class="quiz-actions">
+              <button class="quiz-submit" type="button">提交</button>
+              <div class="quiz-score" aria-live="polite"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="practice-flow" class="subsection section reveal">
+          <div class="section-heading">
+            <span>09 · 综合实战案例</span>
+            <h2>把布局原则落地到真实页面：从结构到细节的完整闭环</h2>
+          </div>
+
+          <div class="tab-group" role="tablist" aria-label="综合实战切换">
+            <button class="tab-btn active" data-target="practice-explain" type="button">📘 讲解</button>
+            <button class="tab-btn" data-target="practice-code" type="button">💻 关键代码</button>
+            <button class="tab-btn" data-target="practice-demo" type="button">🎬 演示 Demo</button>
+            <button class="tab-btn quiz-tab-trigger" data-quiz-target="practice-quiz" type="button">自学自测</button>
+          </div>
+
+          <div class="tab-panel active" data-panel="practice-explain">
+            <div class="info-box">
+              <blockquote>
+                <p><strong>项目进度：</strong>恭喜，「晨光咖啡」落地页的所有零件已经全部做完了——第二节做好了点单按钮的盒模型，第三节理清了整页文档流，第四节实现了吸顶导航、购物车角标和回到顶部，第五节用 Flex 排好了导航和特色卡，第六节用 Grid 铺好了产品菜单，第七节完成三端适配，第八节统一了质感。本节只有一件事：<strong>把它们按正确顺序组装成完整网页</strong>，顺便建立以后做任何页面都通用的开发流程。</p>
+              </blockquote>
+
+              <h3>本节自学目标：</h3>
+              <ol>
+                <li>掌握「先结构、再布局、后视觉」的标准开发流程，告别边写边调</li>
+                <li>能说清晨光咖啡页每个模块为什么选文档流 / 定位 / Flex / Grid</li>
+                <li>理解先可读性后美观、先刚需后装饰的取舍原则</li>
+                <li>能把这套流程迁移到一个全新主题的页面上</li>
+              </ol>
+
+              <h3>正文</h3>
+
+              <h4>一、回顾：九节课如何拼出晨光咖啡页</h4>
+              <ul>
+                <li><strong>结构</strong>：header（导航）→ main（Hero、特色区、菜单区）→ footer（页脚），语义化标签自上而下；</li>
+                <li><strong>盒模型</strong>：点单按钮 padding、菜单卡片尺寸、border-box 保证宽度不被撑破；</li>
+                <li><strong>定位</strong>：导航 fixed 吸顶、购物车红角标 absolute 挂在图标上、回到顶部 fixed、z-index 分层；</li>
+                <li><strong>Flex</strong>：导航三段对齐、3 张特色卡横排等高、自动换行；</li>
+                <li><strong>Grid</strong>：产品菜单三列网格，招牌拿铁跨两列做大主推卡；</li>
+                <li><strong>响应式</strong>：桌面三列 → 平板两列 → 手机单列，vw/rem + 媒体查询；</li>
+                <li><strong>细节</strong>：8px 间距体系、字体三层级、统一圆角阴影、按钮 hover/active。</li>
+              </ul>
+              <p>注意布局方案的选择逻辑：<strong>一维排列用 Flex、二维矩阵用 Grid、脱离常规层级用定位、普通上下堆叠交给文档流</strong>——没有银弹，只有对号入座。</p>
+
+              <h4>二、黄金流程：先结构 → 再布局 → 后视觉</h4>
+              <p><strong>1. 定结构（骨架）</strong>：先不写任何样式，像晨光咖啡这样把页面分成导航、Hero、特色卡、菜单、页脚，用语义化标签搭好，理清主次内容。</p>
+              <p><strong>2. 选布局（排布）</strong>：只解决"排得整齐、位置正确"——导航用 Flex、菜单用 Grid、角标用定位，此阶段不调颜色阴影。</p>
+              <p><strong>3. 做适配（兼容）</strong>：移动端优先，配媒体查询和相对单位，保证手机不挤压、桌面不空洞。</p>
+              <p><strong>4. 调细节（美化）</strong>：最后统一间距、字体层级、圆角阴影和交互反馈。</p>
+              <blockquote><p><strong>为什么不能反过来：</strong>边写边美化，一旦结构调整，样式全部返工；先把卡片调成粉色再发现它要从三列变单列，是新手最常踩的坑。</p></blockquote>
+
+              <h4>三、实战原则：先可读，后美观</h4>
+              <ul>
+                <li><strong>可读性</strong>：咖啡名、价格、描述层级分明，留白舒适；</li>
+                <li><strong>可用性</strong>：导航能跳转、按钮能点、三端都能用；</li>
+                <li><strong>美观度</strong>：统一的圆角阴影和反馈动效，服务于内容而非喧宾夺主。</li>
+              </ul>
+              <p><strong>没有结构和可读性支撑的美化，都是无效装饰。</strong></p>
+
+              <h4>四、结课</h4>
+              <p>从一个点单按钮到一整间"晨光咖啡"，你学到的不是若干属性，而是一条完整链路：<strong>语义化结构 → 科学布局 → 响应式兜底 → 规范化细节</strong>。把店名换成书店、球鞋店、社团招新，用同一套流程就能独立做出新页面。</p>
+
+              <h4>五、自学高频误区</h4>
+              <ol>
+                <li>上手就调色和阴影，结构没定，后期全部返工；</li>
+                <li>一个布局包打天下：简单按钮组硬套 Grid，复杂菜单硬凑 Flex；</li>
+                <li>只做桌面端，手机打开菜单横向溢出；</li>
+                <li>间距圆角随手写，六张卡片六个样；</li>
+                <li>特效堆满却忘了按钮没有 hover、角标层级被遮挡。</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="tab-panel" data-panel="practice-code">
+            <div class="info-box">
+              <p>综合实战不是新语法，而是按<strong>四阶段顺序</strong>把前八节的代码各归其位。下面是「晨光咖啡」每页代码的组织骨架。</p>
+            </div>
+            <pre><code>/* ========== 阶段一：结构（HTML，不写一行样式） ========== */
+&lt;body&gt;
+  &lt;header class="site-nav"&gt;Logo · 导航链接 · 立即点单&lt;/header&gt;
+  &lt;main&gt;
+    &lt;section class="hero"&gt;宣传语 + 大图 + 点单按钮&lt;/section&gt;
+    &lt;section class="features"&gt;  &lt;!-- 3 张特色卡 --&gt; &lt;/section&gt;
+    &lt;section class="menu"&gt;      &lt;!-- 九宫格产品菜单 --&gt; &lt;/section&gt;
+  &lt;/main&gt;
+  &lt;footer&gt;营业时间 / 地址 / 联系方式&lt;/footer&gt;
+
+/* ========== 阶段二：布局（只排位置，不管颜色阴影） ========== */
+.site-nav  { position: fixed; display: flex; justify-content: space-between; } /* ④+⑤ */
+.features { display: flex; gap: 24px; }                                       /* ⑤    */
+.menu-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;            /* ⑥    */
+}
+.menu-grid .featured { grid-column: 1 / span 2; }        /* 招牌拿铁主推大卡    */
+
+/* ========== 阶段三：适配（移动端优先，同一套 HTML） ========== */
+@media (max-width: 768px) {
+  .menu-grid { grid-template-columns: 1fr; }             /* 手机：单列         */
+  .features  { flex-direction: column; }
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .menu-grid { grid-template-columns: repeat(2, 1fr); }  /* 平板：双列         */
+}
+
+/* ========== 阶段四：细节（统一变量 + 交互反馈，最后做） ========== */
+.coffee-card { border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+.order-btn   { border-radius: 999px; transition: .2s; }
+.order-btn:hover  { transform: translateY(-2px); }
+.order-btn:active { transform: scale(.97); }</code></pre>
+          </div>
+
+          <div class="tab-panel" data-panel="practice-demo">
+            <div class="demo-shell">
+              <div class="demo-guide-callout">
+                <strong>【晨光咖啡 · 整页装配台】</strong>
+                下面是九节“零件”拼装后的完整页面（等比缩小预览）。每个区块右上角的<strong>小标签标注它诞生于哪一节</strong>，鼠标悬停区块会高亮描边。缩窄浏览器窗口到手机宽度，菜单还会按第 7 节的断点自动降为单列。
+              </div>
+
+              <div class="finlab-browser">
+                <div class="finlab-titlebar">
+                  <span class="finlab-dot"></span><span class="finlab-dot"></span><span class="finlab-dot"></span>
+                  <span class="finlab-url">https://morning-coffee.example</span>
+                </div>
+                <div class="finlab-page">
+                  <div class="finlab-block finlab-nav">
+                    <span class="finlab-tag">④定位 ⑤Flex</span>
+                    <b class="finlab-logo">☕ 晨光咖啡</b>
+                    <span class="finlab-links"><a>首页</a><a>菜单</a><a>门店</a><a>关于</a></span>
+                    <span class="finlab-cart">🛒<em>2</em></span>
+                    <span class="finlab-btn">立即点单</span>
+                  </div>
+
+                  <div class="finlab-block finlab-hero">
+                    <span class="finlab-tag">②盒模型 ⑧细节</span>
+                    <strong>每一杯，都是清晨的第一缕光</strong>
+                    <span>现磨豆源 · 30 分钟送达 · 新客立减 5 元</span>
+                    <span class="finlab-btn">立即点单</span>
+                  </div>
+
+                  <div class="finlab-features">
+                    <div class="finlab-block finlab-fcard"><span class="finlab-tag">⑤Flex</span>🫘<b>现磨豆源</b><small>埃塞俄比亚当季豆</small></div>
+                    <div class="finlab-block finlab-fcard"><span class="finlab-tag">⑤Flex</span>🛵<b>30 分钟送达</b><small>迟到免费升级大杯</small></div>
+                    <div class="finlab-block finlab-fcard"><span class="finlab-tag">⑤Flex</span>🎟️<b>会员优惠</b><small>第二杯天天半价</small></div>
+                  </div>
+
+                  <div class="finlab-block finlab-menu">
+                    <span class="finlab-tag">⑥Grid · 主推跨两列 ⑦响应式</span>
+                    <p class="finlab-menu-title">本周产品菜单</p>
+                    <div class="finlab-grid">
+                      <div class="finlab-coffee finlab-featured">☕<b>本周主推 · 招牌拿铁</b><small>双份浓缩 + 丝滑蒸奶 ¥22</small></div>
+                      <div class="finlab-coffee">🧊<b>冰美式</b><small>¥18</small></div>
+                      <div class="finlab-coffee">🥛<b>卡布奇诺</b><small>¥20</small></div>
+                      <div class="finlab-coffee">🍫<b>摩卡</b><small>¥22</small></div>
+                      <div class="finlab-coffee">🍮<b>焦糖玛奇朵</b><small>¥24</small></div>
+                      <div class="finlab-coffee">🍵<b>抹茶拿铁</b><small>¥23</small></div>
+                    </div>
+                  </div>
+
+                  <div class="finlab-block finlab-footer">
+                    <span class="finlab-tag">③文档流 ⑦单列降级</span>
+                    <span>营业时间 07:00–22:00</span><span>地址：晨光路 8 号</span><span>电话：400-000-0808</span>
+                  </div>
+
+                  <div class="finlab-top" title="④ fixed 回到顶部">↑</div>
+                </div>
+              </div>
+              <p class="flexlab-note">
+                对照讲解回顾：导航用 <strong>fixed + Flex</strong>，角标是父 relative / 子 absolute；特色区是 <strong>Flex 等高三卡</strong>；菜单是 <strong>Grid 三列 + 主推跨两列</strong>；整套样式只用 8px 倍数间距与一套圆角阴影——这就是从第 1 节蓝图到完整页面的全过程。
+              </p>
+            </div>
+          </div>
+
+          <div class="self-test-panel hidden" id="practice-quiz">
+            <div class="self-test-header">
+              <h5>自学自测</h5>
+              <p>根据刚才的学习，回答标准开发流程、布局选型与实战原则相关问题。</p>
+            </div>
+
+            <div class="quiz-item exam-style">
+              <div class="quiz-number">1</div>
+              <div class="quiz-content">
+                <p>简答：页面开发为什么要遵循「先结构、再布局、后视觉」的流程？</p>
+                <textarea id="pf-q1" rows="3" placeholder="提示：结构是骨架、布局负责排齐、视觉最后收尾，反过来会怎样"></textarea>
+              </div>
+            </div>
+
+            <div class="quiz-item exam-style">
+              <div class="quiz-number">2</div>
+              <div class="quiz-content">
+                <p>简答：Flex 和 Grid 在实战中各自适合什么场景？为什么不能随意混用？</p>
+                <textarea id="pf-q2" rows="3" placeholder="提示：一维导航/按钮组 vs 二维卡片矩阵；混用会怎样"></textarea>
+              </div>
+            </div>
+
+            <div class="quiz-item exam-style">
+              <div class="quiz-number">3</div>
+              <div class="quiz-content">
+                <p>简答：如何理解「先保证可读性，再追求美观」的实战原则？</p>
+                <textarea id="pf-q3" rows="3" placeholder="提示：内容是核心，美化服务内容，无效装饰"></textarea>
+              </div>
+            </div>
+
+            <div class="quiz-item exam-style">
+              <div class="quiz-number">4</div>
+              <div class="quiz-content">
+                <p>简答：一套完整、高质量的网页，需要完成哪四个阶段的开发闭环？</p>
+                <textarea id="pf-q4" rows="3" placeholder="提示：结构 → 布局 → 适配 → 细节"></textarea>
+              </div>
+            </div>
+
+            <div class="quiz-actions">
+              <button class="quiz-submit" type="button">提交</button>
+              <div class="quiz-score" aria-live="polite"></div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="script.js?v=20260917-10"></script>
+  </body>
+</html>
